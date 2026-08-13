@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>도파민 익스프레스</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>도파민 익스프레스: 뇌 속의 여행</h1>
+        <div class="header-right">마약 예방 교육 | 뇌 회로 탐험 가이드</div>
+    </header>
+
+    <main>
+        <div id="map-area">
+            <!-- 지하철 노선도 애니메이션 영역 -->
+            <div class="station" id="vta">VTA (생성소)</div>
+            <div class="station" id="nac">NAc (쾌감중심)</div>
+            <div class="station" id="pfc">PFC (이성판단)</div>
+            <div id="dopamine-gauge">도파민 레벨: <span id="level">50</span>%</div>
+        </div>
+
+        <aside id="info-panel">
+            <h2>실시간 열차 정보</h2>
+            <div id="info-card">아이콘을 클릭하여 기전을 확인하세요.</div>
+            <button onclick="reset()">초기화</button>
+        </aside>
+    </main>
+
+    <section id="controls">
+        <div class="group">
+            <h3>자연 정거장</h3>
+            <button onclick="showInfo('food')">🍎 음식</button>
+            <button onclick="showInfo('exercise')">🏃 운동</button>
+        </div>
+        <div class="group">
+            <h3>인위적 정거장</h3>
+            <button onclick="showInfo('caffeine')">☕ 카페인</button>
+            <button onclick="showInfo('medicine')">💊 수면제</button>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
