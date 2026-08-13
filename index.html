@@ -36,7 +36,6 @@
         .logo-area { display: flex; align-items: center; gap: 10px; font-weight: bold; font-size: 1.1rem; }
         .logo-badge { background: linear-gradient(135deg, #6366f1, #a855f7); padding: 4px 10px; border-radius: 6px; color: white; }
         
-        /* 학생 정보 입력 바 */
         .student-bar { background: #241c42; padding: 8px 15px; border-radius: 10px; display: flex; gap: 15px; align-items: center; margin-bottom: 10px; border: 1px solid var(--border-color); width: 100%; max-width: 1300px; box-sizing: border-box; font-size: 0.9rem; }
         .student-bar input { background: #130f24; border: 1px solid var(--border-color); color: white; padding: 4px 8px; border-radius: 4px; }
 
@@ -50,19 +49,18 @@
         .section-box { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 16px; padding: 20px; }
         .sub-title { font-size: 1.2rem; font-weight: bold; margin: 3px 0 12px 0; color: white; }
 
-        /* 방탈출 인트로 오프닝 오버레이 화면 */
+        /* 방탈출 인트로 오버레이 */
         #intro-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 12, 27, 0.95); z-index: 9999; display: flex; justify-content: center; align-items: center; }
         .intro-modal { background: #1a1530; border: 2px solid var(--accent-purple); padding: 30px; border-radius: 20px; max-width: 500px; text-align: center; box-shadow: 0 0 30px rgba(139, 92, 246, 0.4); }
         .intro-modal h2 { color: #38bdf8; margin-top: 0; }
         .intro-modal p { color: #cbd5e1; line-height: 1.6; font-size: 0.95rem; margin-bottom: 20px; }
         .start-mission-btn { background: linear-gradient(135deg, #06b6d4, #8b5cf6); color: white; border: none; padding: 12px 25px; border-radius: 12px; font-weight: bold; font-size: 1rem; cursor: pointer; }
 
-        /* 로딩바 스타일 */
         #loading-screen { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #0f0c1b; z-index: 9998; flex-direction: column; justify-content: center; align-items: center; gap: 15px; }
         .loading-spinner { width: 50px; height: 50px; border: 5px solid #3b2d63; border-top: 5px solid var(--neon-blue); border-radius: 50%; animation: spin 1s linear infinite; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* 퀴즈 카드 선명한 구분 디자인 */
+        /* 퀴즈 카드 디자인 */
         .quiz-card-item { background: #130f24; border: 2px solid #4c3c80; border-radius: 12px; padding: 18px; margin-bottom: 15px; position: relative; }
         .quiz-card-item.solved { border-color: #10b981; background: #062318; }
         .quiz-option-btn { display: block; width: 100%; text-align: left; background: #1a1530; border: 1px solid var(--border-color); color: white; padding: 10px 14px; border-radius: 8px; margin-top: 8px; cursor: pointer; font-size: 0.9rem; transition: 0.2s; }
@@ -73,7 +71,7 @@
         .hint-text { display: none; background: #1e1b4b; border: 1px solid #6366f1; padding: 8px; border-radius: 6px; font-size: 0.8rem; color: #c7d2fe; margin-top: 8px; }
         .hint-btn { background: #4b5563; color: white; border: none; padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; cursor: pointer; margin-top: 8px; }
 
-        /* [STEP 02] 실험실 리스트 (풍성한 보상) */
+        /* [STEP 02] 실험실 리스트 및 뇌 다이어그램 */
         .lab-dual-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px; }
         .reward-column { background: #130f24; border: 1px solid var(--border-color); border-radius: 14px; padding: 15px; }
         .reward-column.natural { border-top: 4px solid #38bdf8; }
@@ -88,31 +86,37 @@
         .selected-badge-box { background: #1f1938; border: 1px solid var(--neon-blue); padding: 8px 12px; border-radius: 10px; margin-bottom: 10px; display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 0.85rem; }
         .selected-item-tag { background: var(--neon-blue); color: #0f0c1b; padding: 2px 10px; border-radius: 15px; font-weight: bold; font-size: 0.8rem; }
 
-        /* 보건의료 전공서적 기반 3D 스타일 뇌 다이어그램 */
-        .brain-map-container { position: relative; background: #130f24; border-radius: 14px; height: 300px; border: 1px solid var(--border-color); display: flex; justify-content: center; align-items: center; overflow: hidden; margin-top: 10px; }
-        .brain-outline { position: absolute; width: 300px; height: 190px; border: 2px solid rgba(139, 92, 246, 0.4); border-radius: 150px 150px 100px 100px; top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; background: radial-gradient(circle, rgba(139,92,246,0.05) 0%, rgba(15,12,27,0.8) 80%); }
-        
-        .brain-node { position: absolute; background: #261e47; border: 2px solid var(--border-color); padding: 8px 12px; border-radius: 10px; text-align: center; font-size: 0.75rem; font-weight: bold; z-index: 2; transition: 0.3s; }
+        /* 3D 뇌 일러스트 배경 및 가상 시뮬레이션 */
+        .brain-map-container { position: relative; background: #130f24; border-radius: 14px; height: 320px; border: 1px solid var(--border-color); display: flex; justify-content: center; align-items: center; overflow: hidden; margin-top: 10px; }
+        .brain-bg-img { position: absolute; width: 260px; opacity: 0.35; filter: drop-shadow(0 0 15px #8b5cf6); pointer-events: none; }
+
+        .brain-node { position: absolute; background: rgba(26, 21, 48, 0.9); border: 2px solid var(--border-color); padding: 8px 12px; border-radius: 10px; text-align: center; font-size: 0.75rem; font-weight: bold; z-index: 2; transition: 0.3s; cursor: pointer; }
         .brain-node small { display: block; font-size: 0.65rem; color: var(--text-sub); font-weight: normal; }
         
-        #node-vta { bottom: 40px; left: 50px; border-color: #38bdf8; }
-        #node-nac { top: 80px; left: 140px; border-color: #10b981; }
-        #node-pfc { top: 50px; right: 50px; border-color: #a855f7; }
+        #node-vta { bottom: 30px; left: 60px; border-color: #38bdf8; }
+        #node-nac { top: 90px; left: 140px; border-color: #10b981; }
         #node-amygdala { bottom: 40px; right: 70px; border-color: #f59e0b; }
+        #node-pfc { top: 60px; right: 50px; border-color: #a855f7; }
+
+        /* 말풍선 툴팁 */
+        .brain-tooltip { position: absolute; background: #1e1b4b; border: 1px solid #6366f1; padding: 6px 10px; border-radius: 8px; font-size: 0.75rem; color: #c7d2fe; z-index: 10; display: none; max-width: 160px; text-align: left; box-shadow: 0 4px 10px rgba(0,0,0,0.5); }
 
         .neural-line { position: absolute; height: 3px; background: #3b2d63; transform-origin: left center; z-index: 1; transition: 0.4s; }
-        #line-vta-nac { width: 100px; top: 195px; left: 90px; transform: rotate(-38deg); }
-        #line-nac-pfc { width: 100px; top: 100px; left: 190px; transform: rotate(-25deg); }
-        #line-vta-amy { width: 85px; top: 210px; left: 95px; transform: rotate(15deg); }
+        #line-vta-nac { width: 90px; top: 190px; left: 100px; transform: rotate(-35deg); }
+        #line-nac-pfc { width: 90px; top: 105px; left: 185px; transform: rotate(-25deg); }
+        #line-vta-amy { width: 95px; top: 220px; left: 105px; transform: rotate(18deg); }
 
         .active-line { background: var(--neon-blue) !important; box-shadow: 0 0 12px var(--neon-blue); }
         .active-node { border-color: var(--neon-blue) !important; background: #164e63 !important; }
-        .explosion-warning-mode { border-color: #ef4444 !important; background: #450a0a !important; box-shadow: 0 0 25px #ef4444; }
+        
+        /* 1000% 폭탄 폭발 연출 모드 */
+        .explosion-mode { border-color: #ef4444 !important; background: #500e0e !important; box-shadow: 0 0 35px #ef4444; animation: shake 0.5s infinite alternate; }
+        @keyframes shake { 0% { transform: translate(1px, 1px); } 100% { transform: translate(-1px, -1px); } }
 
-        /* 도파민 보상 회로 기전 도식 박스 */
+        /* 도파민 보상회로 확장형 흐름도 박스 */
         .circuit-flow-container { background: #130f24; border: 1px solid var(--border-color); border-radius: 14px; padding: 15px; margin-top: 15px; text-align: center; }
-        .circuit-steps { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
-        .circuit-step-card { background: #1f1938; border: 1px solid #4c3c80; padding: 10px; border-radius: 10px; flex: 1; min-width: 120px; font-size: 0.75rem; }
+        .circuit-steps { display: flex; justify-content: space-between; align-items: center; gap: 6px; margin-top: 10px; flex-wrap: wrap; }
+        .circuit-step-card { background: #1f1938; border: 1px solid #4c3c80; padding: 10px; border-radius: 10px; flex: 1; min-width: 105px; font-size: 0.75rem; }
 
         /* 우측 패널 */
         .gauge-box { background: #130f24; padding: 12px; border-radius: 10px; margin-bottom: 10px; }
@@ -139,11 +143,11 @@
 </head>
 <body>
 
-    <!-- 방탈출 인트로 스토리 오버레이 -->
+    <!-- 방탈출 인트로 스토리 오버레이 (보건실 약장 수정 완료) -->
     <div id="intro-overlay">
         <div class="intro-modal">
             <h2>🚨 [긴급 상황] 학교 보건실 방탈출!</h2>
-            <p>방과 후 고요한 학교. 보건실에 홀로 남겨진 당신, 갑자기 출입문이 굳게 잠겼다!<br>교실 안쪽 의문의 <b>실험실 금고</b>를 열어야만 자동문이 열린다.<br>뇌 과학 미션을 모두 해결하고 보건실을 탈출하여 집으로 무사히 귀가하자!</p>
+            <p>방과 후 고요한 학교. 보건실에 홀로 남겨진 당신, 갑자기 출입문이 굳게 잠겼다!<br>보건실 안쪽 의문의 <b>잠긴 보건실 약장</b>을 열어야만 자동문이 열린다.<br>뇌 과학 미션을 모두 해결하고 보건실을 탈출하여 집으로 무사히 귀가하자!</p>
             <button class="start-mission-btn" onclick="startMission()">미션 시작하기 ➔</button>
         </div>
     </div>
@@ -162,7 +166,7 @@
         <div class="nav-tabs">
             <button class="tab-btn active" onclick="switchTab('quiz1')">📝 STEP 01 기전 퀴즈</button>
             <button class="tab-btn" onclick="switchTab('lab')">🧪 STEP 02 도파민 실험</button>
-            <button class="tab-btn" onclick="switchTab('quiz2')">🏆 STEP 03 방탈출 금고</button>
+            <button class="tab-btn" onclick="switchTab('quiz2')">🏆 STEP 03 방탈출 약장</button>
         </div>
     </header>
 
@@ -174,16 +178,15 @@
         <span style="color: var(--neon-blue); font-size: 0.8rem; margin-left: auto;">💡 미션 완료 시 선생님 시트에 실시간 기록됩니다!</span>
     </div>
 
-    <!-- [STEP 01] 기전 퀴즈 (선명한 카드 분비 + 각 문제별 실시간 해설 연동) -->
+    <!-- [STEP 01] 기전 퀴즈 (해설 누적 표시 시스템 적용) -->
     <div id="quiz1" class="container active">
         <div class="section-box">
             <div style="color: #38bdf8; font-size: 0.8rem; font-weight: bold;">STEP 01 · 동기유발 진단 퀴즈</div>
             <div class="sub-title">마약 중독은 어떻게 일어날까? 올바른 보기를 고르세요</div>
             
             <div style="display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 15px; align-items: start;">
-                <!-- 좌측: 선명하게 분리된 문제 카드들 -->
+                <!-- 좌측: 문제 카드들 -->
                 <div>
-                    <!-- 문제 1 -->
                     <div class="quiz-card-item" id="qcard1">
                         <b>Q1. 마약류를 복용할 때 도파민이 과도하게 생성되는 최초의 뇌 영역은?</b>
                         <button class="quiz-option-btn" onclick="checkQ1(this, false)">① 전두엽 (PFC)</button>
@@ -193,7 +196,6 @@
                         <div id="h1" class="hint-text">유추 힌트: 뇌줄기 부근에 위치하며 도파민을 최초로 뿜어내는 공장입니다.</div>
                     </div>
 
-                    <!-- 문제 2 -->
                     <div class="quiz-card-item" id="qcard2">
                         <b>Q2. VTA에서 분비된 도파민이 전달되어 강렬한 쾌감을 처리하는 중심지는?</b>
                         <button class="quiz-option-btn" onclick="checkQ2(this, true)">① 측좌핵 (NAc)</button>
@@ -203,10 +205,9 @@
                         <div id="h2" class="hint-text">유추 힌트: 쾌감과 보상 기억을 각인시키는 핵심 중추입니다.</div>
                     </div>
 
-                    <!-- 문제 3 -->
                     <div class="quiz-card-item" id="qcard3">
                         <b>Q3. 과도한 자극에 적응하기 위해 뇌가 수용체 수를 줄여 일상의 즐거움을 못 느끼게 하는 현상은?</b>
-                        <button class="quiz-option-btn" onclick="checkQ3(this, false)">① 뉴런 증식</button>
+                        <button class="quiz-option-btn" onclick="checkQ3(this, false)">② 뉴런 증식</button>
                         <button class="quiz-option-btn" onclick="checkQ3(this, true)">② 다운레귤레이션 (수용체 감소)</button>
                         <button class="quiz-option-btn" onclick="checkQ3(this, false)">③ 전두엽 확장</button>
                         <button class="hint-btn" onclick="toggleHint('h3')">💡 상세 힌트</button>
@@ -214,11 +215,11 @@
                     </div>
                 </div>
 
-                <!-- 우측: 문제별 풀 때마다 업데이트되는 해설 리포트 -->
+                <!-- 우측: 해설 누적 표시 패널 -->
                 <div class="section-box" style="background: #130f24; height: 100%;">
-                    <h3 style="color: #fbbf24; margin-top: 0; font-size: 1rem;">📖 실시간 학습 해설 리포트</h3>
-                    <div id="q-explain-panel" style="color: var(--text-sub); font-size: 0.9rem; line-height: 1.6; margin-top: 10px;">
-                        좌측의 문제를 풀면 이 공간에 해당 문제의 상세 해설과 뇌 과학적 의미가 실시간으로 나타납니다!
+                    <h3 style="color: #fbbf24; margin-top: 0; font-size: 1rem;">📖 실시간 누적 학습 해설</h3>
+                    <div id="q-accumulated-explain" style="color: var(--text-sub); font-size: 0.85rem; line-height: 1.6; margin-top: 10px; display:flex; flex-direction:column; gap:10px;">
+                        <div>좌측의 문제를 풀면 여기에 각 문제별 해설이 순서대로 차곡차곡 누적되어 기록됩니다!</div>
                     </div>
                     
                     <div id="quiz1-success" class="success-banner">
@@ -230,17 +231,17 @@
         </div>
     </div>
 
-    <!-- [STEP 02] 도파민 보상 실험실 (풍성한 20여종 보상 리스트 + 3D 뇌 다이어그램) -->
+    <!-- [STEP 02] 도파민 보상 실험실 (3D 뇌 일러스트 배경 + 말풍선 요약 + 폭탄 폭발 연출) -->
     <div id="lab" class="container">
         <div class="section-box" style="margin-bottom: 0;">
             <div style="color: #38bdf8; font-size: 0.8rem; font-weight: bold;">STEP 02 · 도파민 보상 실험</div>
             <div class="sub-title">자연 보상 vs 인위적 보상 비교하기</div>
             
             <div class="lab-dual-grid">
-                <!-- 풍성한 자연 보상 리스트 (20여종 완벽 복원) -->
+                <!-- 자연 보상 리스트 -->
                 <div class="reward-column natural">
                     <h3 style="color: #38bdf8; margin-top: 0; font-size: 1rem;">🌱 자연 보상 (건강한 일상의 활력)</h3>
-                    <p style="color: var(--text-sub); font-size: 0.8rem;">학생들의 일상 속 소소한 즐거움과 성취를 채워주는 건강한 도파민입니다.</p>
+                    <p style="color: var(--text-sub); font-size: 0.8rem;">일상 속 소소한 즐거움과 성취를 채워주는 건강한 도파민입니다.</p>
                     <div class="icon-grid">
                         <button class="icon-btn" onclick="selectReward('맛있는 음식 먹기', 100, '자연 보상', '식사 시 VTA에서 안전하게 도파민이 분비됩니다.')">🍎 음식</button>
                         <button class="icon-btn" onclick="selectReward('꾸준한 운동', 120, '자연 보상', '엔돌핀과 함께 적절한 도파민이 분비됩니다.')">🏃 운동</button>
@@ -256,7 +257,7 @@
                     </div>
                 </div>
 
-                <!-- 풍성한 인위적 보상 리스트 (20여종 완벽 복원) -->
+                <!-- 인위적 보상 리스트 -->
                 <div class="reward-column artificial">
                     <h3 style="color: #f43f5e; margin-top: 0; font-size: 1rem;">⚠️ 인위적 보상 (약물 및 중독성 물질)</h3>
                     <p style="color: var(--text-sub); font-size: 0.8rem;">조절 능력을 무시하고 수 배 이상의 도파민을 폭발시킵니다.</p>
@@ -277,7 +278,7 @@
                 </div>
             </div>
 
-            <!-- 하단 분석 리포트 + 보건의료 전공서적 기반 3D 스타일 뇌 회로 -->
+            <!-- 하단 분석 리포트 + 3D 뇌 일러스트 및 말풍선 시뮬레이션 -->
             <div class="lab-dual-grid" style="align-items: start;">
                 <div class="section-box" id="brain-box-container" style="margin-bottom: 0; background: #130f24;">
                     <div class="selected-badge-box">
@@ -287,29 +288,33 @@
                         </div>
                     </div>
 
-                    <h3 style="margin:0 0 5px 0; font-size: 0.95rem; color:var(--neon-blue);">🧠 보건서적 기반 3D 뇌 전달 통로 다이어그램</h3>
+                    <h3 style="margin:0 0 5px 0; font-size: 0.95rem; color:var(--neon-blue);">🧠 전공서적 기반 3D 뇌 신경 전달 경로 (말풍선 포함)</h3>
+                    <p style="color:var(--text-sub); font-size:0.75rem; margin-bottom:5px;">각 영역 노드를 클릭하면 뇌 부위별 핵심 역할을 확인할 수 있습니다!</p>
+                    
                     <div class="brain-map-container" id="map-container-bg">
-                        <div class="brain-outline"></div>
+                        <!-- 3D 뇌 일러스트 배경 이미지 적용 -->
+                        <img src="https://images.unsplash.com/photo-1559757175-5700dde675bc?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3" class="brain-bg-img" alt="뇌 일러스트">
+                        
                         <div class="neural-line" id="line-vta-nac"></div>
                         <div class="neural-line" id="line-nac-pfc"></div>
                         <div class="neural-line" id="line-vta-amy"></div>
                         
-                        <div class="brain-node" id="node-vta">VTA<small>도파민 생성 공장</small></div>
-                        <div class="brain-node" id="node-nac">측좌핵 (NAc)<small>쾌감·보상 처리</small></div>
-                        <div class="brain-node" id="node-pfc">전두엽 (PFC)<small>이성·충동 억제</small></div>
-                        <div class="brain-node" id="node-amygdala">편도체<small>감정·기억 저장</small></div>
+                        <div class="brain-node" id="node-vta" onclick="showTooltip('tip-vta', event)">VTA<small>복측 피개 영역</small><div id="tip-vta" class="brain-tooltip"><b>VTA:</b> 도파민을 최초로 합성하고 생성하는 뇌의 발전소입니다.</div></div>
+                        <div class="brain-node" id="node-nac" onclick="showTooltip('tip-nac', event)">측좌핵<small>NAc (보상중추)</small><div id="tip-nac" class="brain-tooltip"><b>측좌핵:</b> 도파민을 받아 강렬한 쾌감과 희열을 처리하는 중심지입니다.</div></div>
+                        <div class="brain-node" id="node-amygdala" onclick="showTooltip('tip-amy', event)">편도체<small>감정·기억</small><div id="tip-amy" class="brain-tooltip"><b>편도체:</b> 자극에 대한 감정, 기억, 두려움 등을 각인시키는 부위입니다.</div></div>
+                        <div class="brain-node" id="node-pfc" onclick="showTooltip('tip-pfc', event)">전두엽<small>PFC (이성·통제)</small><div id="tip-pfc" class="brain-tooltip"><b>전두엽:</b> 충동을 억제하고 이성적 판단을 내리는 뇌의 최고 지휘관입니다.</div></div>
                     </div>
 
-                    <!-- 도파민 보상 회로 & 갈망의 형성 기전 도식 (오리지널 연동) -->
+                    <!-- 도파민 보상회로 확장형 흐름도 (전공서적 기반) -->
                     <div class="circuit-flow-container">
-                        <h3 style="color: #c4b5fd; margin-top: 0; font-size: 0.95rem;">🧠 도파민 보상 회로 & 갈망의 형성 기전</h3>
-                        <p style="color: var(--text-sub); font-size: 0.75rem; margin-bottom: 8px;">마약류 1회 복용이 중독으로 이어지는 뇌과학적 경로</p>
+                        <h3 style="color: #c4b5fd; margin-top: 0; font-size: 0.95rem;">🧠 도파민 보상회로 기전 흐름도</h3>
+                        <p style="color: var(--text-sub); font-size: 0.75rem; margin-bottom: 8px;">외부 자극 ➔ VTA 분비 ➔ 측좌핵·편도체 전달 ➔ 전두엽 통제 ➔ 다운레귤레이션(중독)</p>
                         <div class="circuit-steps">
-                            <div class="circuit-step-card"><b>① 자극 입력</b>외부 자극 전달</div>
-                            <div class="circuit-step-card" style="border-color: #38bdf8;"><b>② VTA 활성화</b>도파민 대량 분비</div>
-                            <div class="circuit-step-card" style="border-color: #10b981;"><b>③ 측좌핵 전달</b>쾌감 및 기억 각인</div>
-                            <div class="circuit-step-card" style="border-color: #f59e0b;"><b>⑤ 수용체 감소</b>다운레귤레이션</div>
-                            <div class="circuit-step-card" style="border-color: #f43f5e;"><b>⑥ 갈망 · 중독</b>통제력 상실</div>
+                            <div class="circuit-step-card"><b>1. 자극 입력</b>외부 환경 인지</div>
+                            <div class="circuit-step-card" style="border-color: #38bdf8;"><b>2. VTA 분비</b>도파민 합성·출발</div>
+                            <div class="circuit-step-card" style="border-color: #10b981;"><b>3. 측좌핵·편도체</b>쾌감 및 감정 각인</div>
+                            <div class="circuit-step-card" style="border-color: #a855f7;"><b>4. 전두엽 전달</b>이성적 충동 조절</div>
+                            <div class="circuit-step-card" style="border-color: #f43f5e;"><b>5. 중독(내성)</b>수용체 파괴·갈망</div>
                         </div>
                     </div>
                 </div>
@@ -329,7 +334,7 @@
 
                         <div class="info-card-box" id="info-desc-box">
                             <b style="color: var(--neon-blue);">실험 가이드</b>
-                            <p style="margin: 4px 0 0 0; color: #cbd5e1; font-size:0.85rem;">자연 보상과 인위적 보상 버튼을 다중으로 클릭해 보세요. 뇌 회로에 불이 들어오며 분비량 변화를 관찰할 수 있습니다!</p>
+                            <p style="margin: 4px 0 0 0; color: #cbd5e1; font-size:0.85rem;">자연 보상과 인위적 보상 버튼을 클릭해 보세요. 1000%를 초과하면 폭탄이 터지는 위험 경고가 발생합니다!</p>
                         </div>
                     </div>
 
@@ -339,14 +344,14 @@
         </div>
     </div>
 
-    <!-- [STEP 03] 방탈출 금고 잠금해제 퀴즈 (학교 방탈출 스토리 + 최종 목적지 안내) -->
+    <!-- [STEP 03] 방탈출 약장 퀴즈 (잠긴 보건실 약장 오픈 스토리) -->
     <div id="quiz2" class="container">
         <div class="section-box">
-            <div style="color: #38bdf8; font-size: 0.8rem; font-weight: bold;">STEP 03 · 학교 방탈출 금고 미션</div>
-            <div class="sub-title">보건실 금고를 열고 최종 탈출에 성공하자!</div>
+            <div style="color: #38bdf8; font-size: 0.8rem; font-weight: bold;">STEP 03 · 보건실 약장 방탈출 미션</div>
+            <div class="sub-title">잠긴 보건실 약장을 열고 최종 탈출에 성공하자!</div>
             
             <div class="escape-room-banner">
-                🔐 <b>[방탈출 스토리 상황설정]</b> 방과 후 보건실에 갇힌 당신! 의문의 실험실 금고를 열어야 보건실 자동문이 열린다. 모든 미션을 풀고 <b>보건실 ➔ 학교 중앙 현관 ➔ 정문 ➔ 무사 귀가</b>로 이어지는 최종 목적지로 탈출하세요!
+                🔐 <b>[방탈출 스토리 상황설정]</b> 방과 후 보건실에 갇힌 당신! 의문의 <b>잠긴 보건실 약장</b>을 열어야 보건실 자동문이 열린다. 모든 미션을 풀고 <b>보건실 약장 해제 ➔ 중앙 현관 ➔ 정문 ➔ 무사 귀가</b>로 이어지는 최종 목적지로 탈출하세요!
             </div>
 
             <div class="lab-dual-grid">
@@ -354,7 +359,7 @@
                     <div class="safe-vault-box">
                         <div class="vault-door" id="vault-door-icon">🔒</div>
                         <div class="vault-treasure" id="vault-treasure-icon">🎉</div>
-                        <div style="font-weight: bold; color: var(--neon-blue); margin-top: 8px; font-size: 0.9rem;" id="vault-status-text">금고 잠김 (문제 3개를 모두 해결하세요)</div>
+                        <div style="font-weight: bold; color: var(--neon-blue); margin-top: 8px; font-size: 0.9rem;" id="vault-status-text">약장 잠김 (문제 3개를 모두 해결하세요)</div>
                     </div>
 
                     <!-- 방탈출 문제 1 -->
@@ -385,19 +390,19 @@
                     </div>
                 </div>
 
-                <!-- 우측: 방탈출 미션 브리핑 및 최종 목적지 루트 안내 -->
+                <!-- 우측: 미션 브리핑 및 최종 목적지 탈출 동선 안내 -->
                 <div class="section-box" style="background: #130f24; height: 100%;">
                     <h3 style="color: #fbbf24; margin-top: 0; font-size: 1rem;">📖 방탈출 미션 브리핑 & 탈출 루트</h3>
                     <div id="escape-explain-panel" style="color: var(--text-sub); font-size: 0.9rem; line-height: 1.6; margin-top: 10px;">
-                        미션 문제를 맞힐 때마다 금고의 잠금장치가 하나씩 풀리며 상세 해설이 공개됩니다!
+                        미션 문제를 맞힐 때마다 보건실 약장의 잠금장치가 하나씩 풀리며 상세 해설이 공개됩니다!
                     </div>
 
                     <div id="quiz2-success" class="success-banner">
-                        <h3 style="margin:0 0 5px 0; color:#34d399;">🏆 보건실 방탈출 대성공!</h3>
+                        <h3 style="margin:0 0 5px 0; color:#34d399;">🏆 보건실 약장 해제 & 탈출 대성공!</h3>
                         <p id="congrats-text" style="font-size: 0.85rem; font-weight: bold; margin: 5px 0;"></p>
                         <div style="margin-top: 10px; background: #130f24; padding: 12px; border-radius: 8px; border: 1px dashed var(--neon-blue); font-size:0.8rem; text-align:left;">
                             <b style="color: var(--neon-blue);">🚀 [최종 목적지 탈출 동선 안내]</b><br>
-                            1단계: 보건실 금고 해제 (현재 완료)<br>
+                            1단계: 보건실 약장 잠금해제 (현재 완료)<br>
                             2단계: 학교 중앙 현관 로비 통과<br>
                             3단계: 학교 정문 통과 ➔ 안전 귀가 완료!<br><br>
                             📜 <b>[송악고 도파민 수호전도사 임명장]</b><br>
@@ -414,7 +419,6 @@
     </footer>
 
     <script>
-        // 방탈출 인트로 시작 함수
         function startMission() {
             document.getElementById('intro-overlay').style.display = 'none';
             const loading = document.getElementById('loading-screen');
@@ -440,13 +444,13 @@
                     gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.6);
                     osc.start(ctx.currentTime);
                     osc.stop(ctx.currentTime + 0.6);
-                } else if (type === 'error') {
+                } else if (type === 'error' || type === 'explosion') {
                     osc.type = 'sawtooth';
-                    osc.frequency.setValueAtTime(150, ctx.currentTime);
-                    gain.gain.setValueAtTime(0.2, ctx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+                    osc.frequency.setValueAtTime(120, ctx.currentTime);
+                    gain.gain.setValueAtTime(0.3, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.5);
                     osc.start(ctx.currentTime);
-                    osc.stop(ctx.currentTime + 0.3);
+                    osc.stop(ctx.currentTime + 0.5);
                 }
             } catch(e) {}
         }
@@ -467,8 +471,16 @@
             hintEl.style.display = hintEl.style.display === 'block' ? 'none' : 'block';
         }
 
-        // STEP 01 기전 퀴즈 로직 (각 문제 카드별 개별 해설 업데이트)
-        let qPassedCount = 0;
+        function showTooltip(tipId, ev) {
+            ev.stopPropagation();
+            document.querySelectorAll('.brain-tooltip').forEach(el => el.style.display = 'none');
+            const tip = document.getElementById(tipId);
+            tip.style.display = 'block';
+        }
+        window.onclick = () => { document.querySelectorAll('.brain-tooltip').forEach(el => el.style.display = 'none'); };
+
+        // STEP 01 기전 퀴즈 로직 (해설 누적 표시 시스템)
+        let accumulatedExplanations = [];
         function checkQ1(btn, isCorrect) {
             const parent = btn.parentElement;
             parent.querySelectorAll('.quiz-option-btn').forEach(b => b.classList.remove('correct', 'wrong'));
@@ -478,12 +490,8 @@
                 btn.classList.add('correct');
                 card.classList.add('solved');
                 playSound('success');
-                qPassedCount = Math.max(qPassedCount, 1);
-                document.getElementById('q-explain-panel').innerHTML = `
-                    <b style="color: #34d399;">[Q1 해설] 정답입니다! 🎯</b><br>
-                    <b>VTA(복측 피개 영역)</b>은 뇌줄기 부근에 위치하여 외부 자극이 들어왔을 때 도파민을 최초로 뿜어내는 보상회로의 공장입니다.
-                `;
-                checkStep1AllDone();
+                accumulatedExplanations.push(`<div style="background:#1a1530; padding:10px; border-radius:8px; border-left:3px solid #34d399;"><b style="color: #34d399;">[Q1 해설 정답] VTA(복측 피개 영역)</b><br>외부 자극이 들어왔을 때 도파민을 최초로 합성하고 뿜어내는 보상회로의 공장입니다.</div>`);
+                updateAccumulatedExplanations();
             } else {
                 btn.classList.add('wrong');
                 playSound('error');
@@ -499,12 +507,8 @@
                 btn.classList.add('correct');
                 card.classList.add('solved');
                 playSound('success');
-                qPassedCount = Math.max(qPassedCount, 2);
-                document.getElementById('q-explain-panel').innerHTML = `
-                    <b style="color: #34d399;">[Q2 해설] 정답입니다! 🧠✨</b><br>
-                    <b>측좌핵(NAc)</b>은 VTA에서 건너온 도파민 신호를 받아 강렬한 쾌감을 느끼고 이를 기억으로 각인시키는 핵심 중추입니다.
-                `;
-                checkStep1AllDone();
+                accumulatedExplanations.push(`<div style="background:#1a1530; padding:10px; border-radius:8px; border-left:3px solid #34d399;"><b style="color: #34d399;">[Q2 해설 정답] 측좌핵(NAc)</b><br>VTA에서 건너온 도파민 신호를 받아 강렬한 쾌감을 느끼고 이를 기억으로 각인시키는 중심지입니다.</div>`);
+                updateAccumulatedExplanations();
             } else {
                 btn.classList.add('wrong');
                 playSound('error');
@@ -520,26 +524,22 @@
                 btn.classList.add('correct');
                 card.classList.add('solved');
                 playSound('success');
-                qPassedCount = Math.max(qPassedCount, 3);
-                document.getElementById('q-explain-panel').innerHTML = `
-                    <b style="color: #34d399;">[Q3 해설] 정답입니다! 🏆</b><br>
-                    <b>다운레귤레이션</b>은 폭발적 자극으로부터 뇌를 보호하려 수용체 수를 줄이는 방어작용이지만, 이 때문에 일상적 즐거움을 잃게 됩니다.
-                `;
-                checkStep1AllDone();
+                accumulatedExplanations.push(`<div style="background:#1a1530; padding:10px; border-radius:8px; border-left:3px solid #34d399;"><b style="color: #34d399;">[Q3 해설 정답] 다운레귤레이션</b><br>폭발적 자극으로부터 뇌를 보호하려 수용체 수를 줄이는 방어작용이지만, 일상적 즐거움을 잃게 됩니다.</div>`);
+                updateAccumulatedExplanations();
+                triggerFireworks();
+                document.getElementById('quiz1-success').style.display = 'block';
             } else {
                 btn.classList.add('wrong');
                 playSound('error');
             }
         }
 
-        function checkStep1AllDone() {
-            if (qPassedCount === 3) {
-                triggerFireworks();
-                document.getElementById('quiz1-success').style.display = 'block';
-            }
+        function updateAccumulatedExplanations() {
+            const panel = document.getElementById('q-accumulated-explain');
+            panel.innerHTML = accumulatedExplanations.join('');
         }
 
-        // STEP 02 실험실 (풍성한 보상 + 3D 뇌 다이어그램 연동)
+        // STEP 02 실험실 (폭탄 폭발 연출 추가)
         let selectedRewardsList = [];
         let totalDopamineRate = 100;
 
@@ -566,26 +566,26 @@
             let brainContainer = document.getElementById('brain-box-container');
 
             if (totalDopamineRate >= 1000) {
-                playSound('error');
+                playSound('explosion');
                 fillEl.style.background = 'linear-gradient(90deg, #ef4444, #7f1d1d)';
-                labelEl.innerText = '💥 [멜트다운] 폭발 위험 수준!';
+                labelEl.innerText = '💥 [CRITICAL] 폭탄 폭발! 뇌 회로 붕괴!';
                 labelEl.style.color = '#ef4444';
-                brainContainer.classList.add('explosion-warning-mode');
+                brainContainer.classList.add('explosion-mode');
             } else if (totalDopamineRate > 500) {
                 fillEl.style.background = 'linear-gradient(90deg, #f43f5e, #991b1b)';
                 labelEl.innerText = '🚨 뇌 보상회로 파괴 수준';
                 labelEl.style.color = '#f43f5e';
-                brainContainer.classList.remove('explosion-warning-mode');
+                brainContainer.classList.remove('explosion-mode');
             } else if (totalDopamineRate > 200) {
                 fillEl.style.background = 'linear-gradient(90deg, #f59e0b, #f43f5e)';
                 labelEl.innerText = '⚠️ 고위험 중독·내성 발생';
                 labelEl.style.color = '#f59e0b';
-                brainContainer.classList.remove('explosion-warning-mode');
+                brainContainer.classList.remove('explosion-mode');
             } else {
                 fillEl.style.background = 'linear-gradient(90deg, var(--neon-blue), var(--accent-purple))';
                 labelEl.innerText = '✅ 건강한 정상 범위';
                 labelEl.style.color = 'var(--neon-blue)';
-                brainContainer.classList.remove('explosion-warning-mode');
+                brainContainer.classList.remove('explosion-mode');
             }
 
             if (selectedRewardsList.length > 0) {
@@ -626,15 +626,15 @@
             document.getElementById('dg-label').style.color = 'var(--text-sub)';
             document.getElementById('info-desc-box').innerHTML = `
                 <b style="color: var(--neon-blue);">실험 가이드</b>
-                <p style="margin: 4px 0 0 0; color: #cbd5e1; font-size:0.85rem;">자연 보상과 인위적 보상 버튼을 다중으로 클릭해 보세요. 뇌 회로에 불이 들어오며 분비량 변화를 관찰할 수 있습니다!</p>
+                <p style="margin: 4px 0 0 0; color: #cbd5e1; font-size:0.85rem;">자연 보상과 인위적 보상 버튼을 클릭해 보세요. 1000%를 초과하면 폭탄이 터지는 위험 경고가 발생합니다!</p>
             `;
-            document.getElementById('brain-box-container').classList.remove('explosion-warning-mode');
+            document.getElementById('brain-box-container').classList.remove('explosion-mode');
             
             document.querySelectorAll('.neural-line').forEach(el => el.classList.remove('active-line'));
             document.querySelectorAll('.brain-node').forEach(el => el.classList.remove('active-node'));
         }
 
-        // STEP 03 방탈출 금고 퀴즈 로직
+        // STEP 03 약장 방탈출 퀴즈 로직
         let escapePassed = [false, false, false];
 
         function checkEscapeQuiz(qNum, isCorrect, btnEl) {
@@ -648,15 +648,15 @@
 
                 if (qNum === 1) {
                     document.getElementById('escape-explain-panel').innerHTML = `
-                        <b style="color: #34d399;">[미션 1 성공!]</b> 측좌핵(NAc)은 VTA에서 온 신호를 받아 쾌감을 처리합니다. 금고 자물쇠 1개 해제 완료! 🔓
+                        <b style="color: #34d399;">[미션 1 성공!]</b> 측좌핵(NAc)은 VTA에서 온 신호를 받아 쾌감을 처리합니다. 보건실 약장 자물쇠 1개 해제 완료! 🔓
                     `;
                 } else if (qNum === 2) {
                     document.getElementById('escape-explain-panel').innerHTML = `
-                        <b style="color: #34d399;">[미션 2 성공!]</b> 다운레귤레이션으로 수용체가 줄어듭니다. 금고 자물쇠 2개 해제 완료! 🔓✨
+                        <b style="color: #34d399;">[미션 2 성공!]</b> 다운레귤레이션으로 수용체가 줄어듭니다. 약장 자물쇠 2개 해제 완료! 🔓✨
                     `;
                 } else if (qNum === 3) {
                     document.getElementById('escape-explain-panel').innerHTML = `
-                        <b style="color: #34d399;">[미션 3 성공!]</b> 전두엽(PFC)은 충동을 조절합니다. 마지막 금고 장치 해제 완료! 🔓🔑
+                        <b style="color: #34d399;">[미션 3 성공!]</b> 전두엽(PFC)은 충동을 조절합니다. 마지막 약장 장치 해제 완료! 🔓🔑
                     `;
                 }
                 checkEscapeAllPassed();
@@ -671,11 +671,11 @@
                 triggerFireworks();
                 document.getElementById('vault-door-icon').classList.add('open');
                 document.getElementById('vault-treasure-icon').classList.add('revealed');
-                document.getElementById('vault-status-text').innerText = '금고 완전 해제 완료! 보건실 탈출 성공!';
+                document.getElementById('vault-status-text').innerText = '보건실 약장 완전 해제 완료! 최종 탈출 성공!';
                 
                 const banner = document.getElementById('quiz2-success');
                 banner.style.display = 'block';
-                document.getElementById('congrats-text').innerText = "보건실 금고를 열고 탈출한 당신은 명예로운 '송악고 도파민 수호전도사'로 임명됩니다! 🏆✨";
+                document.getElementById('congrats-text').innerText = "보건실 약장을 열고 탈출한 당신은 명예로운 '송악고 도파민 수호전도사'로 임명됩니다! 🏆✨";
 
                 sendResultToGoogleSheet();
             }
@@ -691,7 +691,7 @@
                 method: 'POST',
                 mode: 'no-cors',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ id: stuId, name: stuName, time: new Date().toLocaleString(), status: '방탈출 금고 성공' })
+                body: JSON.stringify({ id: stuId, name: stuName, time: new Date().toLocaleString(), status: '약장 방탈출 성공' })
             }).then(() => console.log('구글 시트 전송 완료')).catch(err => console.error(err));
         }
     </script>
