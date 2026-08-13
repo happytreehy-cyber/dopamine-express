@@ -1,7 +1,6 @@
-/* 기본 설정 및 다크 테마 배경 */
 body {
-    background-color: #121222;
-    color: #ffffff;
+    background-color: #0f0f1a;
+    color: #f0f0f5;
     font-family: 'Noto Sans KR', sans-serif;
     margin: 0;
     padding: 20px;
@@ -10,153 +9,240 @@ body {
     align-items: center;
 }
 
-header {
+.top-nav {
     width: 100%;
-    max-width: 1100px;
+    max-width: 1400px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background: #181829;
+    padding: 15px 30px;
+    border-radius: 16px;
+    border: 1px solid #2d2d44;
     margin-bottom: 20px;
-    border-bottom: 1px solid #2a2a40;
-    padding-bottom: 15px;
+}
+
+.logo-area {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.badge {
+    background: linear-gradient(135deg, #6366f1, #a855f7);
+    color: white;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: bold;
 }
 
 h1 {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     margin: 0;
-    color: #00f2fe;
+    color: #ffffff;
 }
 
 .header-right {
+    color: #94a3b8;
     font-size: 0.9rem;
-    color: #a2a2c2;
 }
 
-/* 메인 컨텐츠 레이아웃 (지도와 정보창 나란히 배치) */
-main {
-    display: flex;
-    gap: 20px;
+.main-container {
     width: 100%;
-    max-width: 1100px;
-    margin-bottom: 20px;
-}
-
-/* 중앙 지도 영역 */
-#map-area {
-    flex: 2;
-    background-color: #1e1e30;
-    border-radius: 16px;
-    padding: 20px;
-    position: relative;
-    height: 350px;
-    border: 1px solid #2a2a40;
-}
-
-.station {
-    position: absolute;
-    padding: 12px 20px;
-    background: rgba(0, 242, 254, 0.1);
-    border: 1px solid #00f2fe;
-    border-radius: 20px;
-    font-weight: bold;
-    font-size: 0.9rem;
-}
-
-#vta { left: 10%; top: 50%; transform: translateY(-50%); }
-#nac { left: 42%; top: 25%; }
-#pfc { left: 74%; top: 50%; transform: translateY(-50%); }
-
-#dopamine-gauge {
-    position: absolute;
-    bottom: 15px;
-    left: 20px;
-    font-size: 1rem;
-    color: #4facfe;
-    font-weight: bold;
-}
-
-/* 오른쪽 실시간 정보 패널 */
-aside {
-    flex: 1;
-    background-color: #1e1e30;
-    border-radius: 16px;
-    padding: 20px;
-    border: 1px solid #2a2a40;
+    max-width: 1400px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-}
-
-aside h2 {
-    font-size: 1.2rem;
-    margin-top: 0;
-    color: #ffcc00;
-}
-
-#info-card {
-    font-size: 0.95rem;
-    line-height: 1.5;
-    color: #ddd;
-}
-
-aside button {
-    background: #ff4757;
-    color: white;
-    border: none;
-    padding: 10px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background 0.2s;
-}
-
-aside button:hover {
-    background: #ff6b81;
-}
-
-/* 하단 제어판 (정거장 선택 영역) */
-#controls {
-    display: flex;
     gap: 20px;
-    width: 100%;
-    max-width: 1100px;
 }
 
-.group {
-    flex: 1;
-    background-color: #1e1e30;
-    padding: 20px;
-    border-radius: 16px;
-    border: 1px solid #2a2a40;
+.card {
+    background: #181829;
+    border: 1px solid #2d2d44;
+    border-radius: 20px;
+    padding: 25px;
 }
 
-.group h3 {
+.selection-section {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.category-card h3 {
     margin-top: 0;
-    font-size: 1rem;
-    color: #a2a2c2;
-    margin-bottom: 12px;
+    font-size: 1.1rem;
+    color: #38bdf8;
+    margin-bottom: 15px;
 }
 
-.group-buttons {
+.warning-zone h3 {
+    color: #f43f5e;
+}
+
+.icon-grid {
     display: flex;
-    gap: 10px;
     flex-wrap: wrap;
+    gap: 10px;
 }
 
-.group-buttons button {
-    background: #2a2a40;
+.item-btn {
+    background: #23233c;
     color: white;
-    border: 1px solid #3f3f5f;
-    padding: 10px 16px;
+    border: 1px solid #3f3f60;
+    padding: 10px 18px;
     border-radius: 12px;
     cursor: pointer;
     font-size: 0.95rem;
-    transition: all 0.2s;
+    transition: all 0.2s ease;
 }
 
-.group-buttons button:hover {
-    background: #00f2fe;
-    color: #121222;
-    border-color: #00f2fe;
+.item-btn:hover {
+    background: #3b82f6;
+    border-color: #60a5fa;
+    transform: translateY(-2px);
+}
+
+.item-btn.danger:hover {
+    background: #e11d48;
+    border-color: #fb7185;
+}
+
+.item-btn.illegal:hover {
+    background: #7f1d1d;
+    border-color: #f87171;
+}
+
+.simulation-section {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 20px;
+}
+
+.brain-map-card h2 {
+    margin-top: 0;
+    font-size: 1.2rem;
+}
+
+.brain-map-card p {
+    color: #94a3b8;
+    font-size: 0.9rem;
+}
+
+.brain-visual-box {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background: #11111d;
+    padding: 30px;
+    border-radius: 16px;
+    margin: 20px 0;
+    border: 1px dashed #3f3f60;
+}
+
+.brain-node {
+    background: #23233c;
+    border: 2px solid #6366f1;
+    padding: 15px 20px;
+    border-radius: 16px;
+    text-align: center;
     font-weight: bold;
+    min-width: 100px;
+}
+
+.brain-node small {
+    color: #94a3b8;
+    font-weight: normal;
+}
+
+.brain-line {
+    flex-grow: 1;
+    height: 3px;
+    background: #3f3f60;
+    margin: 0 10px;
+}
+
+.current-status-text {
+    background: #23233c;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    color: #cbd5e1;
+}
+
+.info-panel-card h2 {
+    margin-top: 0;
+    font-size: 1.2rem;
+    color: #fbbf24;
+}
+
+.gauge-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.gauge-value {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #38bdf8;
+    min-width: 90px;
+}
+
+.progress-bar-bg {
+    flex-grow: 1;
+    background: #11111d;
+    height: 14px;
+    border-radius: 7px;
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #38bdf8, #6366f1);
+    width: 50%;
+    transition: width 0.4s ease;
+}
+
+.info-content-box {
+    background: #11111d;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    min-height: 90px;
+}
+
+.info-content-box h4 {
+    margin: 0 0 8px 0;
+    color: #38bdf8;
+}
+
+.info-content-box p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #cbd5e1;
+    line-height: 1.4;
+}
+
+.reset-btn {
+    width: 100%;
+    background: #334155;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.reset-btn:hover {
+    background: #475569;
+}
+
+@media(max-width: 900px) {
+    .selection-section, .simulation-section {
+        grid-template-columns: 1fr;
+    }
 }
