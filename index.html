@@ -2,47 +2,79 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>도파민 익스프레스</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>도파민 익스프레스 - 마약 예방 교육</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <h1>도파민 익스프레스: 뇌 속의 여행</h1>
-        <div class="header-right">마약 예방 교육 | 뇌 회로 탐험 가이드</div>
+    <header class="top-nav">
+        <div class="logo-area">
+            <span class="badge">도파민 랩</span>
+            <h1>도파민 익스프레스: 뇌 속의 여행</h1>
+        </div>
+        <div class="header-right">마약 예방 교육 | 고등학교 보건 수업용</div>
     </header>
 
-    <main>
-        <div id="map-area">
-            <!-- 지하철 노선도 애니메이션 영역 -->
-            <div class="station" id="vta">VTA (생성소)</div>
-            <div class="station" id="nac">NAc (쾌감중심)</div>
-            <div class="station" id="pfc">PFC (이성판단)</div>
-            <div id="dopamine-gauge">도파민 레벨: <span id="level">50</span>%</div>
-        </div>
-
-        <aside id="info-panel">
-            <h2>실시간 열차 정보</h2>
-            <div id="info-card">아이콘을 클릭하여 기전을 확인하세요.</div>
-            <button onclick="reset()">초기화</button>
-        </aside>
-    </main>
-
-    <section id="controls">
-        <div class="group">
-            <h3>자연 정거장</h3>
-            <div class="group-buttons">
-                <button onclick="showInfo('food')">🍎 음식</button>
-                <button onclick="showInfo('exercise')">🏃 운동</button>
+    <div class="main-container">
+        <!-- 상단: 자연 보상 vs 인위적 보상 선택 영역 -->
+        <section class="selection-section">
+            <div class="card category-card">
+                <h3>🌱 자연 보상</h3>
+                <div class="icon-grid">
+                    <button class="item-btn" onclick="selectItem('food', 120, '음식', '자연 보상(음식)', '생존과 종족 보존을 위한 필수적 보상입니다. 적절한 도파민을 분비하여 활력을 줍니다.')">🍎 음식</button>
+                    <button class="item-btn" onclick="selectItem('exercise', 130, '운동', '자연 보상(운동)', '엔돌핀과 도파민이 적절히 분비되어 성취감과 기분 전환을 돕습니다.')">🏃 운동</button>
+                    <button class="item-btn" onclick="selectItem('music', 125, '음악', '자연 보상(음악)', '예술적 자극을 통해 감정을 순화하고 안정적인 도파민 분비를 유도합니다.')">🎵 음악</button>
+                    <button class="item-btn" onclick="selectItem('sleep', 110, '수면', '자연 보상(수면)', '수면 중 도파민 수용체가 회복되며 뇌가 재충전됩니다.')">😴 수면</button>
+                    <button class="item-btn" onclick="selectItem('praise', 140, '칭찬', '사회적 보상', '사회적 유대를 강화하며 뇌의 보상 회로를 건강하게 자극합니다.')">⭐ 칭찬</button>
+                </div>
             </div>
-        </div>
-        <div class="group">
-            <h3>인위적 정거장</h3>
-            <div class="group-buttons">
-                <button onclick="showInfo('caffeine')">☕ 카페인</button>
-                <button onclick="showInfo('medicine')">💊 수면제</button>
+
+            <div class="card category-card warning-zone">
+                <h3>⚠️ 인위적 보상 (약물 및 중독성 물질)</h3>
+                <div class="icon-grid">
+                    <button class="item-btn danger" onclick="selectItem('caffeine', 180, '카페인', '합법 약물 (중추신경 자극제)', '아데노신 수용체를 차단하여 각성 효과를 줍니다. 과다 섭취 시 내성과 수면 장애가 올 수 있습니다.')">☕ 카페인</button>
+                    <button class="item-btn danger" onclick="selectItem('sleepingPill', 250, '수면제', '향정신성의약품 (억제제)', 'GABA를 활성화하여 뇌를 억제합니다. 의존성과 금단 증상의 위험이 큽니다.')">🌙 수면제</button>
+                    <button class="item-btn danger" onclick="selectItem('dietPill', 300, '다이어트약', '향정신성의약품 (식욕억제제)', '식욕 중독과 심각한 향정신적 부작용을 초래할 수 있는 향정신성 성분입니다.')">🦋 다이어트약</button>
+                    <button class="item-btn danger" onclick="selectItem('alcohol', 280, '알코올', '합법 중독 물질 (억제제)', '전두엽의 이성적 통제 기능을 마비시키고 도파민을 과다 분비시킵니다.')">🍺 알코올</button>
+                    <button class="item-btn illegal" onclick="selectItem('meth', 1000, '필로폰', '불법 마약류 (중추신경 자극제)', '자연 보상의 10배에 달하는 도파민을 폭발시켜 뇌의 보상회로를 완전히 망가뜨립니다.')">⚡ 필로폰</button>
+                    <button class="item-btn illegal" onclick="selectItem('fentanyl', 1200, '펜타닐', '불법 마약류 (강력 진통제)', '치사량이 매우 낮고 단 1회 투여만으로도 강력한 중독과 호흡중추 마비를 일으킵니다.')">💀 펜타닐</button>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+
+        <!-- 하단: 뇌 회로 시뮬레이션 및 실시간 정보 -->
+        <section class="simulation-section">
+            <div class="card brain-map-card">
+                <div class="map-header">
+                    <h2>🧠 뇌 보상 회로 시뮬레이션</h2>
+                    <p>아이콘을 클릭하면 신경전달 경로가 활성화됩니다.</p>
+                </div>
+                <div class="brain-visual-box">
+                    <div class="brain-node" id="node-vta">VTA<br><small>도파민 생성</small></div>
+                    <div class="brain-line"></div>
+                    <div class="brain-node" id="node-nac">측좌핵(NAc)<br><small>쾌감·보상 처리</small></div>
+                    <div class="brain-line"></div>
+                    <div class="brain-node" id="node-pfc">전두엽(PFC)<br><small>이성·통제</small></div>
+                </div>
+                <div class="current-status-text" id="pathway-desc">하단의 보상 아이콘을 클릭하여 뇌의 반응을 관찰하세요.</div>
+            </div>
+
+            <div class="card info-panel-card">
+                <h2>📊 도파민 분비량 분석</h2>
+                <div class="gauge-container">
+                    <span class="gauge-value" id="dopamine-val">100%</span>
+                    <div class="progress-bar-bg">
+                        <div class="progress-bar-fill" id="gauge-bar" style="width: 50%;"></div>
+                    </div>
+                </div>
+                <div class="info-content-box" id="info-box">
+                    <h4 id="info-title">선택된 항목 없음</h4>
+                    <p id="info-desc">자연 보상과 인위적 보상의 차이를 비교해 보세요.</p>
+                </div>
+                <button class="reset-btn" onclick="resetSimulation()">🔄 초기화</button>
+            </div>
+        </section>
+    </div>
 
     <script src="script.js"></script>
 </body>
