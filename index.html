@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>도파민 랩 - 마약 예방 교육</title>
-    <!-- 효과음 및 폭죽 효과를 위한 외부 라이브러리 (Canvas Confetti 및 Web Audio API 활용) -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
         :root {
@@ -49,8 +48,6 @@
         /* [STEP 01] 드래그 앤 드롭 퀴즈 스타일 */
         .word-bank { display: flex; flex-wrap: wrap; gap: 10px; background: #130f24; padding: 15px; border-radius: 14px; margin-bottom: 20px; border: 1px dashed var(--border-color); }
         .word-chip { background: #261e47; border: 1px solid var(--accent-purple); color: white; padding: 8px 16px; border-radius: 20px; cursor: grab; font-size: 0.95rem; font-weight: bold; user-select: none; }
-        .word-chip:active { cursor: grabbing; }
-
         .quiz-slot-box { background: #130f24; padding: 15px 20px; border-radius: 14px; margin: 12px 0; border-left: 4px solid var(--accent-purple); font-size: 1rem; line-height: 1.8; }
         .drop-zone { display: inline-block; min-width: 140px; height: 32px; background: #1f1938; border: 2px dashed var(--neon-blue); border-radius: 8px; text-align: center; vertical-align: middle; color: var(--neon-blue); font-weight: bold; line-height: 32px; margin: 0 5px; padding: 0 10px; }
         .drop-zone.filled { background: #0e4959; border-style: solid; color: white; }
@@ -64,10 +61,8 @@
         .icon-btn.danger { border-color: #e11d48; }
         .icon-btn.danger:hover { background: #e11d48; }
 
-        /* 연한 뇌 윤곽 배경과 회로 시뮬레이션 */
+        /* 뇌 전달 통로 시뮬레이션 */
         .brain-map-container { position: relative; background: #130f24; border-radius: 16px; height: 360px; border: 1px solid var(--border-color); display: flex; justify-content: center; align-items: center; overflow: hidden; margin-top: 15px; }
-        
-        /* CSS로 부드럽게 그린 연한 뇌 윤곽선 */
         .brain-outline { position: absolute; width: 340px; height: 220px; border: 2px solid rgba(139, 92, 246, 0.25); border-radius: 170px 170px 110px 110px; top: 50%; left: 50%; transform: translate(-50%, -50%); pointer-events: none; }
         .brain-outline::before { content: ''; position: absolute; width: 100px; height: 60px; border: 2px solid rgba(139, 92, 246, 0.15); border-radius: 50px; bottom: -10px; left: 110px; }
 
@@ -79,7 +74,6 @@
         #node-pfc { top: 60px; right: 50px; }
         #node-amygdala { bottom: 50px; right: 90px; }
 
-        /* 신경 전달선 애니메이션 */
         .neural-line { position: absolute; height: 4px; background: #3b2d63; transform-origin: left center; z-index: 1; transition: 0.4s; }
         #line-vta-nac { width: 115px; top: 225px; left: 105px; transform: rotate(-38deg); }
         #line-nac-pfc { width: 110px; top: 125px; left: 215px; transform: rotate(-25deg); }
@@ -87,6 +81,9 @@
 
         .active-line { background: var(--neon-blue) !important; box-shadow: 0 0 12px var(--neon-blue); }
         .active-node { border-color: var(--neon-blue) !important; background: #164e63 !important; }
+        
+        /* 폭발 경고 효과 클래스 */
+        .danger-mode { border-color: #ef4444 !important; background: #450a0a !important; box-shadow: 0 0 20px #ef4444; }
 
         /* 우측 정보 패널 */
         .gauge-box { background: #130f24; padding: 15px; border-radius: 12px; margin-bottom: 15px; }
@@ -99,7 +96,7 @@
         .reset-btn { width: 100%; background: #374151; color: white; border: none; padding: 10px; border-radius: 10px; cursor: pointer; font-weight: bold; }
         .reset-btn:hover { background: #4b5563; }
 
-        /* [STEP 03] 마무리 퀴즈 스타일 */
+        /* [STEP 03] 금고 탈출 평가 스타일 */
         .quiz-option-btn { display: block; width: 100%; text-align: left; background: #130f24; border: 1px solid var(--border-color); color: white; padding: 12px 18px; border-radius: 10px; margin-top: 8px; cursor: pointer; font-size: 0.95rem; transition: 0.2s; }
         .quiz-option-btn:hover { background: #261e47; border-color: var(--accent-purple); }
         .quiz-option-btn.correct { background: #065f46; border-color: #34d399; }
@@ -158,7 +155,6 @@
     <!-- [STEP 02] 도파민 보상 실험실 (메인) -->
     <div id="lab" class="container">
         <div class="lab-grid">
-            <!-- 좌측: 보상 아이콘 및 뇌 다이어그램 -->
             <div style="display: flex; flex-direction: column; gap: 20px;">
                 <div class="section-box">
                     <div style="color: #38bdf8; font-size: 0.85rem; font-weight: bold;">STEP 02 · 도파민 보상 실험</div>
@@ -177,9 +173,10 @@
 
                     <div class="icon-section-title" style="color: #f43f5e; margin-top: 15px;">⚠️ 인위적 보상 (약물 및 중독성 물질)</div>
                     <div class="icon-grid">
-                        <button class="icon-btn danger" onclick="triggerSimul('카페인', 180, '합법 약물 (중추신경 자극제)', '아데노신 수용체를 차단하여 각성 효과를 줍니다. 과다 섭취 시 내성과 수면 장애가 발생합니다.', 'vta-nac')">☕ 카페인</button>
+                        <button class="icon-btn danger" onclick="triggerSimul('연한 아메리카노 (적정량)', 140, '합법 각성제', '적당량의 카페인은 아데노신을 막아 집중력을 돕는 건강한 수준의 자극입니다.', 'vta-nac')">☕ 연한 아메리카노</button>
+                        <button class="icon-btn danger" onclick="triggerSimul('고카페인 에너지 음료 (과다)', 220, '합법 각성제 (과다섭취)', '지나친 카페인은 심장을 뛰게 하고 뇌가 쉬지 못하게 만들어 수면 장애와 내성을 유발합니다.', 'vta-nac')">⚡ 에너지 음료</button>
                         <button class="icon-btn danger" onclick="triggerSimul('수면제', 220, '향정신성의약품 (억제제)', 'GABA 수용체를 활성화하여 중추신경을 억제합니다. 의존성과 금단 증상 위험이 있습니다.', 'vta-nac')">🌙 수면제</button>
-                        <button class="icon-btn danger" onclick="triggerSimul('다이어트약', 250, '향정신성의약품 (식욕억제제)', '향정신성 식욕억제 성분으로 펜터민 계열은 도파민 분비를 촉진하여 심장 부담과 의존성 위험이 큽니다.', 'vta-nac')">🦋 다이어트약</button>
+                        <button class="icon-btn danger" onclick="triggerSimul('다이어트약', 250, '향정신성의약품 (식욕억제제)', '펜터민 계열 성분은 도파민 분비를 촉진해 심장 부담과 의존성 위험이 큽니다.', 'vta-nac')">🦋 다이어트약</button>
                         <button class="icon-btn danger" onclick="triggerSimul('프로포폴', 350, '향정신성의약품 (마취제)', 'GABA를 강력하게 활성화하여 의식 소실과 강한 쾌감을 유발해 중독성이 매우 높습니다.', 'all')">💉 프로포폴</button>
                         <button class="icon-btn danger" onclick="triggerSimul('대마', 300, '불법 마약류 (환각제)', '칸나비노이드 수용체에 작용하여 감각을 왜곡하고 뇌 보상회로를 교란합니다.', 'all')">🌿 대마</button>
                         <button class="icon-btn danger" onclick="triggerSimul('알코올', 250, '합법 중독 물질 (억제제)', '전두엽의 이성적 통제 기능을 마비시키고 도파민 분비를 강제로 폭발시킵니다.', 'all')">🍺 알코올</button>
@@ -191,11 +188,11 @@
                     </div>
                 </div>
 
-                <!-- 연한 뇌 윤곽과 전달로 시뮬레이션 -->
-                <div class="section-box">
+                <!-- 뇌 전달 통로 시뮬레이션 -->
+                <div class="section-box" id="brain-box-container">
                     <h2>🧠 뇌 전달 통로 시뮬레이션</h2>
-                    <p style="color: var(--text-sub); font-size: 0.85rem;">아이콘을 클릭하면 뇌 속에서 신경 신호가 전달되는 경로가 불빛으로 표시됩니다.</p>
-                    <div class="brain-map-container">
+                    <p style="color: var(--text-sub); font-size: 0.85rem;" id="brain-desc-sub">아이콘을 클릭하면 뇌 속에서 신경 신호가 전달되는 경로가 불빛으로 표시됩니다.</p>
+                    <div class="brain-map-container" id="map-container-bg">
                         <div class="brain-outline"></div>
                         
                         <div class="neural-line" id="line-vta-nac"></div>
@@ -210,7 +207,7 @@
                 </div>
             </div>
 
-            <!-- 우측: 도파민 수치 및 뇌 영역 해설 패널 -->
+            <!-- 우측 패널 -->
             <div class="section-box" style="display: flex; flex-direction: column; justify-content: space-between;">
                 <div>
                     <h2>📊 도파민 분석 리포트</h2>
@@ -230,9 +227,9 @@
 
                     <div style="background: #130f24; padding: 15px; border-radius: 12px; font-size: 0.85rem; line-height: 1.5; color: #94a3b8; border: 1px solid var(--border-color);">
                         💡 <b>핵심 뇌 영역 가이드:</b><br>
-                        • <b>VTA (복측 피개 영역):</b> 도파민을 최초로 만들어내는 뇌의 발전소.<br>
-                        • <b>측좌핵 (NAc):</b> 도파민을 받아 쾌감과 희열을 느끼는 중심부.<br>
-                        • <b>전두엽 (PFC):</b> '참아라' 명령을 내리는 이성과 충동 조절 장치.
+                        • <b>VTA:</b> 도파민을 최초로 만들어내는 뇌의 발전소.<br>
+                        • <b>측좌핵 (NAc):</b> 도파민을 받아 쾌감을 느끼는 중심부.<br>
+                        • <b>전두엽 (PFC):</b> '참아라' 명령을 내리는 이성 통제 장치.
                     </div>
                 </div>
 
@@ -241,13 +238,12 @@
         </div>
     </div>
 
-    <!-- [STEP 03] 금고 탈출 평가 퀴즈 (객관식 1개 + 초성 퀴즈 1개) -->
+    <!-- [STEP 03] 금고 탈출 평가 퀴즈 -->
     <div id="quiz2" class="container">
         <div class="section-box">
             <div style="color: #38bdf8; font-size: 0.85rem; font-weight: bold;">STEP 03 · 금고 잠금해제 평가 퀴즈</div>
             <div class="sub-title">모든 문제를 맞추고 도파민 랩 금고를 열어보세요!</div>
             
-            <!-- 문제 1: 객관식 -->
             <div class="quiz-slot-box" style="margin-bottom: 20px;">
                 <b>[문제 1] 다음 중 뇌의 보상회로를 파괴하는 인위적 보상(마약류)의 특징으로 거리가 먼 것은?</b>
                 <button class="quiz-option-btn" onclick="checkQuiz1(this, false)">① 자연 보상보다 수 배에서 수십 배 많은 도파민을 분비한다.</button>
@@ -255,13 +251,12 @@
                 <button class="quiz-option-btn" onclick="checkQuiz1(this, false)">③ 반복 사용 시 수용체가 줄어드는 다운레귤레이션(내성)이 발생한다.</button>
             </div>
 
-            <!-- 문제 2: 초성 퀴즈 -->
             <div class="quiz-slot-box">
                 <b>[문제 2] 뇌의 충동을 억제하고 이성적 판단을 담당하는 핵심 영역의 이름은 무엇일까요? (초성 퀴즈)</b><br>
-                <span style="font-size: 1.2rem; color: var(--neon-blue); font-weight: bold; display: inline-block; margin: 8px 0;">정답 초성: ㅈ ㄷ ㅇ (3글자)</span>
+                <span style="font-size: 1.2rem; color: var(--neon-blue); font-weight: bold; display: inline-block; margin: 8px 0;">정답 초성: ㅈ ㅈ ㅇ (3글자) 또는 전두엽</span>
                 <div style="display: flex; gap: 10px; margin-top: 10px;">
-                    <input type="text" id="chosung-input" placeholder="정답을 입력하세요 (예: 전두엽)" style="background: #130f24; border: 1px solid var(--border-color); color: white; padding: 10px; border-radius: 8px; width: 250px;">
-                    <button class="submit-btn" onclick="checkChosung()">정답 제출</button>
+                    <input type="text" id="chosung-input" placeholder="정답을 입력하세요" style="background: #130f24; border: 1px solid var(--border-color); color: white; padding: 10px; border-radius: 8px; width: 250px;">
+                    <button class="submit-btn" onclick="checkChosung()" style="background: linear-gradient(135deg, #06b6d4, #3b82f6); color: white; border: none; padding: 10px 25px; border-radius: 12px; font-weight: bold; cursor: pointer;">정답 제출</button>
                 </div>
             </div>
 
@@ -277,7 +272,8 @@
     </footer>
 
     <script>
-        // Web Audio API를 이용한 딩동댕 및 효과음 생성 함수
+        let clickDangerCount = 0; // 위험 물질 연속 클릭 횟수 추적
+
         function playSound(type) {
             try {
                 const ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -287,7 +283,6 @@
                 gain.connect(ctx.destination);
 
                 if (type === 'success') {
-                    // 딩동댕 (C5 -> E5 -> G5)
                     osc.frequency.setValueAtTime(523.25, ctx.currentTime);
                     osc.frequency.setValueAtTime(659.25, ctx.currentTime + 0.15);
                     osc.frequency.setValueAtTime(783.99, ctx.currentTime + 0.3);
@@ -295,28 +290,21 @@
                     gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.6);
                     osc.start(ctx.currentTime);
                     osc.stop(ctx.currentTime + 0.6);
-                } else if (type === 'error') {
-                    // 땡 (낮은 음)
+                } else if (type === 'error' || type === 'explosion') {
                     osc.type = 'sawtooth';
-                    osc.frequency.setValueAtTime(150, ctx.currentTime);
-                    gain.gain.setValueAtTime(0.2, ctx.currentTime);
-                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+                    osc.frequency.setValueAtTime(100, ctx.currentTime);
+                    gain.gain.setValueAtTime(0.3, ctx.currentTime);
+                    gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.4);
                     osc.start(ctx.currentTime);
-                    osc.stop(ctx.currentTime + 0.3);
+                    osc.stop(ctx.currentTime + 0.4);
                 }
             } catch(e) {}
         }
 
-        // 폭죽 터뜨리기 함수
         function triggerFireworks() {
-            confetti({
-                particleCount: 100,
-                spread: 70,
-                origin: { y: 0.6 }
-            });
+            confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
         }
 
-        // 탭 전환
         function switchTab(tabId) {
             document.querySelectorAll('.container').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
@@ -324,7 +312,6 @@
             event.target.classList.add('active');
         }
 
-        // STEP 01 드래그 앤 드롭 로직
         let correctCount = 0;
         function allowDrop(ev) { ev.preventDefault(); }
         function drag(ev) { ev.dataTransfer.setData("text", ev.target.id); }
@@ -350,7 +337,6 @@
             }
         }
 
-        // STEP 02 실험실 시뮬레이션
         function triggerSimul(name, rate, category, desc, pathwayType) {
             document.getElementById('dg-percent').innerText = rate + '%';
             let barWidth = Math.min((rate / 1200) * 100, 100);
@@ -358,24 +344,52 @@
             fillEl.style.width = barWidth + '%';
 
             let labelEl = document.getElementById('dg-label');
-            if (rate > 500) {
+            let brainContainer = document.getElementById('brain-box-container');
+            let brainBg = document.getElementById('map-container-bg');
+            let subText = document.getElementById('brain-desc-sub');
+
+            // 위험 물질 연속 클릭 시 폭발 연출 트리거
+            if (rate >= 800) {
+                clickDangerCount++;
+            } else {
+                clickDangerCount = 0;
+            }
+
+            if (clickDangerCount >= 2 || rate >= 1000) {
+                playSound('explosion');
+                triggerFireworks(); // 폭죽 효과 겸용
+                fillEl.style.background = 'linear-gradient(90deg, #ef4444, #7f1d1d)';
+                labelEl.innerText = '💥 뇌 보상회로 멜트다운 (폭발 직전!)';
+                labelEl.style.color = '#ef4444';
+                brainContainer.classList.add('danger-mode');
+                brainBg.style.background = '#450a0a';
+                subText.innerHTML = '🚨 <b style="color:#f87171;">경고! 사람이 멀쩡할 리가 없습니다! 뇌의 통제력과 신경망이 완전히 박살 났습니다!</b>';
+            } else if (rate > 500) {
                 fillEl.style.background = 'linear-gradient(90deg, #f43f5e, #991b1b)';
                 labelEl.innerText = '🚨 뇌 보상회로 파괴 수준';
                 labelEl.style.color = '#f43f5e';
+                brainContainer.classList.remove('danger-mode');
+                brainBg.style.background = '#130f24';
+                subText.innerText = '아이콘을 클릭하면 뇌 속에서 신경 신호가 전달되는 경로가 불빛으로 표시됩니다.';
             } else if (rate > 200) {
                 fillEl.style.background = 'linear-gradient(90deg, #f59e0b, #f43f5e)';
                 labelEl.innerText = '⚠️ 고위험 중독·내성 발생';
                 labelEl.style.color = '#f59e0b';
+                brainContainer.classList.remove('danger-mode');
+                brainBg.style.background = '#130f24';
+                subText.innerText = '아이콘을 클릭하면 뇌 속에서 신경 신호가 전달되는 경로가 불빛으로 표시됩니다.';
             } else {
                 fillEl.style.background = 'linear-gradient(90deg, var(--neon-blue), var(--accent-purple))';
                 labelEl.innerText = '✅ 건강한 정상 범위';
                 labelEl.style.color = 'var(--neon-blue)';
+                brainContainer.classList.remove('danger-mode');
+                brainBg.style.background = '#130f24';
+                subText.innerText = '아이콘을 클릭하면 뇌 속에서 신경 신호가 전달되는 경로가 불빛으로 표시됩니다.';
             }
 
             document.getElementById('info-title').innerText = `[${category}] ${name} (분비량 ${rate}%)`;
             document.getElementById('info-text').innerText = desc;
 
-            // 뇌 전달 통로 애니메이션 점등
             let line1 = document.getElementById('line-vta-nac');
             let line2 = document.getElementById('line-nac-pfc');
             let line3 = document.getElementById('line-vta-amy');
@@ -414,6 +428,7 @@
         }
 
         function resetSimul() {
+            clickDangerCount = 0;
             document.getElementById('dg-percent').innerText = '100%';
             document.getElementById('dg-bar').style.width = '10%';
             document.getElementById('dg-bar').style.background = 'linear-gradient(90deg, var(--neon-blue), var(--accent-purple))';
@@ -421,12 +436,14 @@
             document.getElementById('dg-label').style.color = 'var(--text-sub)';
             document.getElementById('info-title').innerText = '보상 아이콘을 선택하세요';
             document.getElementById('info-text').innerText = '좌측 아이콘을 클릭하여 뇌 보상 회로의 변화와 약물 특징을 확인해 보세요.';
+            document.getElementById('brain-box-container').classList.remove('danger-mode');
+            document.getElementById('map-container-bg').style.background = '#130f24';
+            document.getElementById('brain-desc-sub').innerText = '아이콘을 클릭하면 뇌 속에서 신경 신호가 전달되는 경로가 불빛으로 표시됩니다.';
             
             document.querySelectorAll('.neural-line').forEach(el => el.classList.remove('active-line'));
             document.querySelectorAll('.brain-node').forEach(el => el.classList.remove('active-node'));
         }
 
-        // STEP 03 퀴즈 검증 로직
         let q1Passed = false;
         let q2Passed = false;
 
@@ -447,13 +464,13 @@
 
         function checkChosung() {
             const val = document.getElementById('chosung-input').value.trim();
-            if (val === '전두엽') {
+            if (val === '전두엽' || val === '전두엽(PFC)') {
                 playSound('success');
                 q2Passed = true;
                 checkAllPassed();
             } else {
                 playSound('error');
-                alert('틀렸습니다! 다시 생각해보세요. (힌트: ㅈㄷㅇ)');
+                alert('틀렸습니다! 다시 생각해보세요. (힌트: ㅈㄷㅇ 또는 전두엽)');
             }
         }
 
