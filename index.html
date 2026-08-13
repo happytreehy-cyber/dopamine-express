@@ -3,79 +3,342 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>도파민 익스프레스 - 마약 예방 교육</title>
-    <link rel="stylesheet" href="style.css">
+    <title>도파민 랩 - 마약 예방 교육</title>
+    <style>
+        :root {
+            --bg-color: #0f0c1b;
+            --card-bg: #1a1530;
+            --border-color: #3b2d63;
+            --accent-purple: #8b5cf6;
+            --neon-blue: #06b6d4;
+            --text-main: #f3f4f6;
+            --text-sub: #9ca3af;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            font-family: 'Noto Sans KR', sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        header {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .logo-area { display: flex; align-items: center; gap: 10px; font-weight: bold; font-size: 1.2rem; }
+        .logo-badge { background: linear-gradient(135deg, #6366f1, #a855f7); padding: 5px 12px; border-radius: 8px; }
+        .nav-tabs { display: flex; gap: 10px; background: #241c42; padding: 5px; border-radius: 30px; border: 1px solid var(--border-color); }
+        .tab-btn { background: transparent; border: none; color: var(--text-sub); padding: 8px 20px; border-radius: 20px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .tab-btn.active { background: var(--accent-purple); color: white; box-shadow: 0 0 15px rgba(139, 92, 246, 0.5); }
+        
+        .container { width: 100%; max-width: 1200px; display: none; flex-direction: column; gap: 20px; }
+        .container.active { display: flex; }
+
+        /* 실험실 화면 레이아웃 */
+        .lab-grid { display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 20px; }
+        .section-box { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; padding: 20px; }
+        
+        h2 { font-size: 1.1rem; margin-top: 0; color: #c4b5fd; display: flex; align-items: center; gap: 8px; }
+        .sub-title { font-size: 1.4rem; font-weight: bold; margin: 5px 0 15px 0; color: white; }
+
+        .icon-grid { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; }
+        .icon-btn { background: #261e47; border: 1px solid #4c3c80; color: white; padding: 8px 14px; border-radius: 12px; cursor: pointer; font-size: 0.9rem; transition: 0.2s; display: flex; align-items: center; gap: 5px; }
+        .icon-btn:hover, .icon-btn.selected { background: var(--accent-purple); border-color: #c4b5fd; transform: translateY(-2px); }
+        .icon-btn.danger { border-color: #e11d48; }
+        .icon-btn.danger:hover { background: #e11d48; }
+
+        /* 뇌 시뮬레이션 맵 영역 */
+        .brain-map-container { position: relative; background: #130f24; border-radius: 16px; height: 320px; border: 1px dashed var(--border-color); display: flex; justify-content: center; align-items: center; overflow: hidden; }
+        .brain-bg-shape { position: absolute; width: 280px; height: 200px; border: 2px solid rgba(139, 92, 246, 0.2); border-radius: 140px 140px 100px 100px; display: flex; justify-content: center; align-items: center; }
+        
+        .brain-node { position: absolute; background: #261e47; border: 2px solid var(--border-color); padding: 10px 15px; border-radius: 12px; text-align: center; font-size: 0.85rem; font-weight: bold; z-index: 2; transition: 0.3s; }
+        .brain-node small { display: block; font-size: 0.7rem; color: var(--text-sub); font-weight: normal; }
+        
+        #node-vta { bottom: 35px; left: 40px; }
+        #node-nac { top: 70px; left: 140px; }
+        #node-pfc { top: 40px; right: 40px; }
+        #node-amygdala { bottom: 40px; right: 80px; }
+
+        /* 애니메이션 신경 전달선 */
+        .neural-path { position: absolute; height: 4px; background: #3b2d63; transform-origin: left center; z-index: 1; transition: 0.4s; }
+        #path-1 { width: 110px; top: 215px; left: 85px; transform: rotate(-35deg); }
+        #path-2 { width: 100px; top: 110px; left: 200px; transform: rotate(-20deg); }
+
+        .active-path { background: var(--neon-blue) !important; box-shadow: 0 0 10px var(--neon-blue); }
+        .active-node { border-color: var(--neon-blue) !important; background: #164e63 !important; }
+
+        /* 우측 정보 패널 */
+        .gauge-box { background: #130f24; padding: 15px; border-radius: 12px; margin-bottom: 15px; }
+        .gauge-title { font-size: 0.85rem; color: var(--text-sub); }
+        .gauge-flex { display: flex; align-items: baseline; justify-content: space-between; margin: 8px 0; }
+        .gauge-percent { font-size: 1.8rem; font-weight: bold; color: var(--neon-blue); }
+        .progress-bar { width: 100%; background: #261e47; height: 10px; border-radius: 5px; overflow: hidden; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--neon-blue), var(--accent-purple)); width: 10%; transition: 0.4s; }
+
+        .info-card-box { background: #130f24; padding: 15px; border-radius: 12px; font-size: 0.9rem; line-height: 1.5; min-height: 100px; color: #e5e7eb; margin-bottom: 15px; }
+        .reset-btn { width: 100%; background: #374151; color: white; border: none; padding: 10px; border-radius: 10px; cursor: pointer; font-weight: bold; }
+        .reset-btn:hover { background: #4b5563; }
+
+        /* 퀴즈 화면 스타일 */
+        .quiz-card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 20px; padding: 25px; margin-bottom: 20px; }
+        .quiz-step-title { color: #38bdf8; font-size: 0.9rem; font-weight: bold; text-transform: uppercase; margin-bottom: 5px; }
+        .quiz-question-box { background: #130f24; padding: 15px 20px; border-radius: 14px; margin: 12px 0; border-left: 4px solid var(--accent-purple); font-size: 0.95rem; line-height: 1.6; }
+        .blank { display: inline-block; min-width: 100px; border-bottom: 2px dashed var(--neon-blue); color: var(--neon-blue); text-align: center; padding: 0 5px; font-weight: bold; }
+        
+        .word-bank { display: flex; flex-wrap: wrap; gap: 10px; background: #130f24; padding: 15px; border-radius: 14px; margin-bottom: 15px; }
+        .word-chip { background: #261e47; border: 1px solid var(--accent-purple); color: white; padding: 6px 14px; border-radius: 20px; cursor: pointer; font-size: 0.9rem; }
+        
+        .action-btns { display: flex; gap: 10px; }
+        .submit-btn { background: linear-gradient(135deg, #06b6d4, #3b82f6); color: white; border: none; padding: 10px 25px; border-radius: 12px; font-weight: bold; cursor: pointer; }
+        
+        footer { margin-top: 30px; text-align: center; font-size: 0.8rem; color: var(--text-sub); border-top: 1px solid var(--border-color); width: 100%; max-width: 1200px; padding-top: 15px; }
+    </style>
 </head>
 <body>
-    <header class="top-nav">
+
+    <header>
         <div class="logo-area">
-            <span class="badge">도파민 랩</span>
-            <h1>도파민 익스프레스: 뇌 속의 여행</h1>
+            <span class="logo-badge">도파민 랩</span>
+            <span>마약 예방 교육 시스템</span>
         </div>
-        <div class="header-right">마약 예방 교육 | 고등학교 보건 수업용</div>
+        <div class="nav-tabs">
+            <button class="tab-btn" onclick="switchTab('quiz1')">📝 STEP 01 사전 퀴즈</button>
+            <button class="tab-btn active" onclick="switchTab('lab')">🧪 STEP 02 도파민 보상 실험</button>
+            <button class="tab-btn" onclick="switchTab('quiz2')">🏆 STEP 03 마무리 퀴즈</button>
+        </div>
     </header>
 
-    <div class="main-container">
-        <!-- 상단: 자연 보상 vs 인위적 보상 선택 영역 -->
-        <section class="selection-section">
-            <div class="card category-card">
-                <h3>🌱 자연 보상</h3>
-                <div class="icon-grid">
-                    <button class="item-btn" onclick="selectItem('food', 120, '음식', '자연 보상(음식)', '생존과 종족 보존을 위한 필수적 보상입니다. 적절한 도파민을 분비하여 활력을 줍니다.')">🍎 음식</button>
-                    <button class="item-btn" onclick="selectItem('exercise', 130, '운동', '자연 보상(운동)', '엔돌핀과 도파민이 적절히 분비되어 성취감과 기분 전환을 돕습니다.')">🏃 운동</button>
-                    <button class="item-btn" onclick="selectItem('music', 125, '음악', '자연 보상(음악)', '예술적 자극을 통해 감정을 순화하고 안정적인 도파민 분비를 유도합니다.')">🎵 음악</button>
-                    <button class="item-btn" onclick="selectItem('sleep', 110, '수면', '자연 보상(수면)', '수면 중 도파민 수용체가 회복되며 뇌가 재충전됩니다.')">😴 수면</button>
-                    <button class="item-btn" onclick="selectItem('praise', 140, '칭찬', '사회적 보상', '사회적 유대를 강화하며 뇌의 보상 회로를 건강하게 자극합니다.')">⭐ 칭찬</button>
-                </div>
+    <!-- [STEP 01] 사전 퀴즈 컨테이너 -->
+    <div id="quiz1" class="container">
+        <div class="quiz-card">
+            <div class="quiz-step-title">STEP 01 · 중독 기전 진단 퀴즈</div>
+            <div class="sub-title">마약 중독은 어떻게 일어날까? 빈칸을 채워보세요</div>
+            <p style="color: var(--text-sub); font-size: 0.9rem;">아래 단어들을 조합하여 뇌 과학적 중독의 단계를 완성해 보세요.</p>
+            
+            <div class="word-bank">
+                <span class="word-chip">VTA(복측 피개 영역)</span>
+                <span class="word-chip">측좌핵(보상 회로)</span>
+                <span class="word-chip">1000%</span>
+                <span class="word-chip">다운레귤레이션(수용체 감소)</span>
+                <span class="word-chip">갈망(Craving)</span>
+                <span class="word-chip">금단 증상</span>
+                <span class="word-chip">내성</span>
+                <span class="word-chip">전두엽(이성)</span>
             </div>
 
-            <div class="card category-card warning-zone">
-                <h3>⚠️ 인위적 보상 (약물 및 중독성 물질)</h3>
-                <div class="icon-grid">
-                    <button class="item-btn danger" onclick="selectItem('caffeine', 180, '카페인', '합법 약물 (중추신경 자극제)', '아데노신 수용체를 차단하여 각성 효과를 줍니다. 과다 섭취 시 내성과 수면 장애가 올 수 있습니다.')">☕ 카페인</button>
-                    <button class="item-btn danger" onclick="selectItem('sleepingPill', 250, '수면제', '향정신성의약품 (억제제)', 'GABA를 활성화하여 뇌를 억제합니다. 의존성과 금단 증상의 위험이 큽니다.')">🌙 수면제</button>
-                    <button class="item-btn danger" onclick="selectItem('dietPill', 300, '다이어트약', '향정신성의약품 (식욕억제제)', '식욕 중독과 심각한 향정신적 부작용을 초래할 수 있는 향정신성 성분입니다.')">🦋 다이어트약</button>
-                    <button class="item-btn danger" onclick="selectItem('alcohol', 280, '알코올', '합법 중독 물질 (억제제)', '전두엽의 이성적 통제 기능을 마비시키고 도파민을 과다 분비시킵니다.')">🍺 알코올</button>
-                    <button class="item-btn illegal" onclick="selectItem('meth', 1000, '필로폰', '불법 마약류 (중추신경 자극제)', '자연 보상의 10배에 달하는 도파민을 폭발시켜 뇌의 보상회로를 완전히 망가뜨립니다.')">⚡ 필로폰</button>
-                    <button class="item-btn illegal" onclick="selectItem('fentanyl', 1200, '펜타닐', '불법 마약류 (강력 진통제)', '치사량이 매우 낮고 단 1회 투여만으로도 강력한 중독과 호흡중추 마비를 일으킵니다.')">💀 펜타닐</button>
-                </div>
+            <div class="quiz-question-box">
+                1. 마약류를 복용하면 뇌의 <span class="blank">[ 빈칸 1 ]</span> 에서 도파민이 과도하게 생성됩니다. <br><small style="color:var(--text-sub)">힌트: 뇌줄기 근처에 위치한 도파민 분비의 핵심 영역</small>
             </div>
-        </section>
-
-        <!-- 하단: 뇌 회로 시뮬레이션 및 실시간 정보 -->
-        <section class="simulation-section">
-            <div class="card brain-map-card">
-                <div class="map-header">
-                    <h2>🧠 뇌 보상 회로 시뮬레이션</h2>
-                    <p>아이콘을 클릭하면 신경전달 경로가 활성화됩니다.</p>
-                </div>
-                <div class="brain-visual-box">
-                    <div class="brain-node" id="node-vta">VTA<br><small>도파민 생성</small></div>
-                    <div class="brain-line"></div>
-                    <div class="brain-node" id="node-nac">측좌핵(NAc)<br><small>쾌감·보상 처리</small></div>
-                    <div class="brain-line"></div>
-                    <div class="brain-node" id="node-pfc">전두엽(PFC)<br><small>이성·통제</small></div>
-                </div>
-                <div class="current-status-text" id="pathway-desc">하단의 보상 아이콘을 클릭하여 뇌의 반응을 관찰하세요.</div>
+            <div class="quiz-question-box">
+                2. 생성된 도파민은 <span class="blank">[ 빈칸 2 ]</span> 으로 전달되어 강렬한 쾌감을 만들어냅니다. <br><small style="color:var(--text-sub)">힌트: 뇌 보상 시스템의 중심으로 쾌감을 처리하는 영역</small>
             </div>
-
-            <div class="card info-panel-card">
-                <h2>📊 도파민 분비량 분석</h2>
-                <div class="gauge-container">
-                    <span class="gauge-value" id="dopamine-val">100%</span>
-                    <div class="progress-bar-bg">
-                        <div class="progress-bar-fill" id="gauge-bar" style="width: 50%;"></div>
-                    </div>
-                </div>
-                <div class="info-content-box" id="info-box">
-                    <h4 id="info-title">선택된 항목 없음</h4>
-                    <p id="info-desc">자연 보상과 인위적 보상의 차이를 비교해 보세요.</p>
-                </div>
-                <button class="reset-btn" onclick="resetSimulation()">🔄 초기화</button>
+            <div class="quiz-question-box">
+                3. 마약의 도파민 분비량은 자연 보상보다 <span class="blank">[ 빈칸 3 ]</span> 강력하여 뇌가 이를 '가장 중요한 생존 신호'로 기록합니다.
             </div>
-        </section>
+        </div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- [STEP 02] 도파민 보상 실험 컨테이너 (메인) -->
+    <div id="lab" class="container active">
+        <div class="lab-grid">
+            <!-- 좌측: 자연 보상 vs 인위적 보상 선택 및 뇌 맵핑 -->
+            <div style="display: flex; flex-direction: column; gap: 20px;">
+                <div class="section-box">
+                    <div class="quiz-step-title">STEP 02 · 도파민 보상 실험실</div>
+                    <div class="sub-title">자연 보상 vs 인위적 보상 비교하기</div>
+                    <p style="color: var(--text-sub); font-size: 0.85rem; margin-bottom: 15px;">아이콘을 클릭하면 뇌 보상 회로가 활성화되고 도파민 수치와 이동 경로가 시각화됩니다.</p>
+                    
+                    <h2 style="color: #38bdf8; font-size: 0.95rem;">🌱 자연 보상 (건강한 일상의 활력)</h2>
+                    <div class="icon-grid">
+                        <button class="icon-btn" onclick="triggerSimul('음식', 100, '자연 보상', '음식 섭취 시 VTA에서 도파민이 분비되어 측좌핵으로 전달되며 생존에 필요한 즐거움을 줍니다.', 1)">🍎 음식</button>
+                        <button class="icon-btn" onclick="triggerSimul('운동', 120, '자연 보상', '운동을 통해 엔돌핀과 함께 적절한 도파민이 분비되어 성취감과 기분 전환을 유도합니다.', 1)">🏃 운동</button>
+                        <button class="icon-btn" onclick="triggerSimul('음악', 110, '자연 보상', '좋아하는 음악을 들을 때 뇌의 보상회로가 부드럽게 자극됩니다.', 1)">🎵 음악</button>
+                        <button class="icon-btn" onclick="triggerSimul('수면', 105, '자연 보상', '충분한 수면은 지친 뇌의 도파민 수용체를 회복시키는 필수 과정입니다.', 1)">😴 수면</button>
+                        <button class="icon-btn" onclick="triggerSimul('칭찬', 130, '사회적 보상', '타인의 인정과 칭찬은 사회적 유대감을 높여 건강한 도파민을 분비시킵니다.', 1)">⭐ 칭찬</button>
+                        <button class="icon-btn" onclick="triggerSimul('성취', 140, '사회적 보상', '목표를 달성했을 때 전두엽과 보상회로가 연동되어 깊은 성취감을 느낍니다.', 1)">🏆 성취</button>
+                        <button class="icon-btn" onclick="triggerSimul('명상', 100, '정신적 보상', '마음을 차분하게 가라앉히며 뇌파를 안정시키고 스트레스를 해소합니다.', 1)">🧘 명상</button>
+                    </div>
+
+                    <h2 style="color: #f43f5e; font-size: 0.95rem; margin-top: 15px;">⚠️ 인위적 보상 (약물 및 중독성 물질)</h2>
+                    <div class="icon-grid">
+                        <button class="icon-btn danger" onclick="triggerSimul('카페인', 180, '합법 약물 (중추신경 자극제)', '아데노신 수용체를 차단하여 각성 효과를 줍니다. 과다 섭취 시 내성과 수면 장애가 발생합니다.', 2)">☕ 카페인</button>
+                        <button class="icon-btn danger" onclick="triggerSimul('수면제', 220, '향정신성의약품 (억제제)', 'GABA 수용체를 활성화하여 중추신경을 억제합니다. 의존성과 금단 증상 위험이 있습니다.', 2)">🌙 수면제</button>
+                        <button class="icon-btn danger" onclick="triggerSimul('다이어트약', 250, '향정신성의약품 (식욕억제제)', '향정신성 식욕억제 성분으로 뇌를 자극하여 과도한 도파민 분비와 부작용을 유발합니다.', 2)">🦋 다이어트약</button>
+                        <button class="icon-btn danger" onclick="triggerSimul('프로포폴', 350, '향정신성의약품 (마취제)', 'GABA를 강력하게 활성화하여 의식 소실과 강한 쾌감을 동반하여 중독성이 매우 높습니다.', 2)">💉 프로포폴</button>
+                        <button class="icon-btn danger" onclick="triggerSimul('대마', 300, '불법 마약류 (환각제)', '칸나비노이드 수용체에 작용하여 감각을 왜곡하고 뇌 보상회로를 교란합니다.', 3)">🌿 대마</button>
+                        <button class="icon-btn danger" onclick="triggerSimul('알코올', 250, '합법 중독 물질 (억제제)', '전두엽의 이성적 통제 기능을 마비시키고 도파민 분비를 강제로 폭발시킵니다.', 2)">🍺 알코올</button>
+                        <button class="icon-btn danger" onclick="triggerSimul('엑스터시', 600, '불법 마약류 (합성 환각제)', '세로토닌과 도파민을 대량 방출시켜 뇌 신경계에 심각한 손상을 줍니다.', 3)">💊 엑스터시</button>
+                        <button class="icon-btn danger" onclick="triggerSimul('코카인', 800, '불법 마약류 (강력 각성제)', '도파민 재흡수를 차단하여 시냅스에 도파민이 폭발적으로 쌓이게 만듭니다.', 3)">❄️ 코카인</button>
+                        <button class="icon-btn danger" onclick="triggerSimul('LSD', 700, '불법 마약류 (환각제)', '뇌의 세로토닌 수용체를 자극하여 극심한 환각과 인지 왜곡을 일으킵니다.', 3)">🌀 LSD</button>
+                        <button class="icon-btn danger" onclick="triggerSimul('필로폰', 1000, '불법 마약류 (중추신경 자극제)', '자연 보상의 10배에 달하는 도파민을 분비시켜 뇌의 수용체를 파괴하고 극심한 내성을 유발합니다.', 3)">⚡ 필로폰</button>
+                        <button class="icon-btn danger" onclick="triggerSimul('헤로인', 1100, '불법 마약류 (아편계 마약)', '엔도르핀 수용체에 작용하여 뇌의 자연적인 쾌감 시스템을 완전히 무력화합니다.', 3)">🏴‍☠️ 헤로인</button>
+                        <button class="icon-btn danger" onclick="triggerSimul('펜타닐', 1200, '불법 마약류 (합성 진통제)', '치사량이 극도로 낮으며 단 1회 투여만으로도 호흡중추 마비와 치명적 중독을 일으킵니다.', 3)">💀 펜타닐</button>
+                    </div>
+                </div>
+
+                <!-- 뇌 다이어그램 시각화 박스 -->
+                <div class="section-box">
+                    <h2>🧠 실시간 뇌 전달 통로 시뮬레이션</h2>
+                    <div class="brain-map-container">
+                        <div class="brain-bg-shape"></div>
+                        <div class="neural-path" id="path-1"></div>
+                        <div class="neural-path" id="path-2"></div>
+                        
+                        <div class="brain-node" id="node-vta">VTA<small>도파민 생성소</small></div>
+                        <div class="brain-node" id="node-nac">측좌핵 (NAc)<small>쾌감·보상 처리</small></div>
+                        <div class="brain-node" id="node-pfc">전두엽 (PFC)<small>이성·통제 중추</small></div>
+                        <div class="brain-node" id="node-amygdala">편도체<small>감정·기억</small></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 우측: 도파민 수치 게이지 및 뇌 영역별 해설 패널 -->
+            <div class="section-box" style="display: flex; flex-direction: column; justify-content: space-between;">
+                <div>
+                    <h2>📊 도파민 분비량 분석 리포트</h2>
+                    <div class="gauge-box">
+                        <span class="gauge-title">기준치(음식) 대비 분비량</span>
+                        <div class="gauge-flex">
+                            <span class="gauge-percent" id="dg-percent">100%</span>
+                            <span id="dg-label" style="color: var(--text-sub); font-size: 0.9rem;">정상 범위</span>
+                        </div>
+                        <div class="progress-bar"><div class="progress-fill" id="dg-bar" style="width: 10%;"></div></div>
+                    </div>
+
+                    <div class="info-card-box" id="info-desc-box">
+                        <b id="info-title" style="color: var(--neon-blue);">보상 아이콘을 선택하세요</b>
+                        <p id="info-text" style="margin: 8px 0 0 0; color: #cbd5e1;">좌측의 자연 보상 또는 인위적 보상 아이콘을 클릭하면 뇌 속에서 도파민이 이동하는 기전과 상세한 약물 특징을 확인할 수 있습니다.</p>
+                    </div>
+
+                    <div style="background: #130f24; padding: 15px; border-radius: 12px; font-size: 0.85rem; line-height: 1.4; color: #94a3b8;">
+                        💡 <b>핵심 뇌 영역 해설:</b><br>
+                        • <b>VTA:</b> 뇌줄기 근처에서 도파민을 처음 생성하는 공장.<br>
+                        • <b>측좌핵(NAc):</b> 쾌감과 보상을 느끼는 중심지.<br>
+                        • <b>전두엽(PFC):</b> 충동을 억제하고 이성적 판단을 내리는 중추.
+                    </div>
+                </div>
+
+                <button class="reset-btn" onclick="resetSimul()" style="margin-top: 15px;">🔄 시뮬레이션 초기화</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- [STEP 03] 마무리 퀴즈 컨테이너 -->
+    <div id="quiz2" class="container">
+        <div class="quiz-card">
+            <div class="quiz-step-title">STEP 03 · 수업 정리 및 평가 퀴즈</div>
+            <div class="sub-title">오늘 배운 중독의 조건과 뇌 보상회로 확인하기</div>
+            <p style="color: var(--text-sub); font-size: 0.9rem;">수업을 모두 마친 후, 아래 핵심 개념을 올바르게 이해했는지 점검해 보세요.</p>
+            
+            <div class="quiz-question-box">
+                <b>Q1.</b> 인위적 보상(마약 및 약물 오남용)이 반복될 때, 뇌는 과도한 도파민 자극에 적응하기 위해 수용체 수를 줄이는 현상을 무엇이라 할까요?<br>
+                <span style="color: var(--neon-blue); font-weight: bold; display: inline-block; margin-top: 8px;">정답: 다운레귤레이션 (내성 발생의 원인)</span>
+            </div>
+            <div class="quiz-question-box">
+                <b>Q2.</b> 의료용으로 허용된 약물(수면제, 다이어트약 등)이라도 오남용할 경우 중독될 수 있는 이유는 무엇인가요?<br>
+                <span style="color: var(--neon-blue); font-weight: bold; display: inline-block; margin-top: 8px;">정답: 뇌의 보상회로를 강제로 자극하여 자연 보상보다 훨씬 많은 도파민을 분비시키기 때문입니다.</span>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        송악고등학교 보건교육 · 도파민 랩 인터랙티브 에듀케이션 시스템 v2026
+    </footer>
+
+    <script>
+        // 탭 전환 함수
+        function switchTab(tabId) {
+            document.querySelectorAll('.container').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // 실험실 시뮬레이션 작동 함수
+        function triggerSimul(name, rate, category, desc, level) {
+            // 퍼센트 및 게이지 업데이트
+            document.getElementById('dg-percent').innerText = rate + '%';
+            let barWidth = Math.min((rate / 1200) * 100, 100);
+            let fillEl = document.getElementById('dg-bar');
+            fillEl.style.width = barWidth + '%';
+
+            // 색상 및 레이블 변경
+            let labelEl = document.getElementById('dg-label');
+            if (rate > 500) {
+                fillEl.style.background = 'linear-gradient(90deg, #f43f5e, #991b1b)';
+                labelEl.innerText = '🚨 뇌 보상회로 파괴 수준';
+                labelEl.style.color = '#f43f5e';
+            } else if (rate > 200) {
+                fillEl.style.background = 'linear-gradient(90deg, #f59e0b, #f43f5e)';
+                labelEl.innerText = '⚠️ 고위험 중독·내성 발생';
+                labelEl.style.color = '#f59e0b';
+            } else {
+                fillEl.style.background = 'linear-gradient(90deg, var(--neon-blue), var(--accent-purple))';
+                labelEl.innerText = '✅ 건강한 정상 범위';
+                labelEl.style.color = 'var(--neon-blue)';
+            }
+
+            // 정보 박스 업데이트
+            document.getElementById('info-title').innerText = `[${category}] ${name} (도파민 ${rate}%)`;
+            document.getElementById('info-text').innerText = desc;
+
+            // 신경선 및 노드 애니메이션 효과
+            let path1 = document.getElementById('path-1');
+            let path2 = document.getElementById('path-2');
+            let nodeVta = document.getElementById('node-vta');
+            let nodeNac = document.getElementById('node-nac');
+            let nodePfc = document.getElementById('node-pfc');
+
+            // 초기화 후 순차 점등
+            path1.classList.remove('active-path');
+            path2.classList.remove('active-path');
+            nodeVta.classList.remove('active-node');
+            nodeNac.classList.remove('active-node');
+            nodePfc.classList.remove('active-node');
+
+            setTimeout(() => {
+                nodeVta.classList.add('active-node');
+                path1.classList.add('active-path');
+            }, 100);
+
+            setTimeout(() => {
+                nodeNac.classList.add('active-node');
+                if (level >= 2) {
+                    path2.classList.add('active-path');
+                }
+            }, 300);
+
+            setTimeout(() => {
+                if (level >= 2) {
+                    nodePfc.classList.add('active-node');
+                }
+            }, 500);
+        }
+
+        function resetSimul() {
+            document.getElementById('dg-percent').innerText = '100%';
+            document.getElementById('dg-bar').style.width = '10%';
+            document.getElementById('dg-bar').style.background = 'linear-gradient(90deg, var(--neon-blue), var(--accent-purple))';
+            document.getElementById('dg-label').innerText = '정상 범위';
+            document.getElementById('dg-label').style.color = 'var(--text-sub)';
+            
+            document.getElementById('info-title').innerText = '보상 아이콘을 선택하세요';
+            document.getElementById('info-text').innerText = '좌측의 자연 보상 또는 인위적 보상 아이콘을 클릭하면 뇌 속에서 도파민이 이동하는 기전과 상세한 약물 특징을 확인할 수 있습니다.';
+            
+            document.getElementById('path-1').classList.remove('active-path');
+            document.getElementById('path-2').classList.remove('active-path');
+            document.getElementById('node-vta').classList.remove('active-node');
+            document.getElementById('node-nac').classList.remove('active-node');
+            document.getElementById('node-pfc').classList.remove('active-node');
+        }
+    </script>
 </body>
 </html>
